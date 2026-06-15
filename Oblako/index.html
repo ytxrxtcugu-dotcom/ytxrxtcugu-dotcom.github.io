@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
@@ -11,37 +11,65 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
-            background: #f5f3f0;
             font-family: 'Inter', sans-serif;
             color: #1a1a1a;
             line-height: 1.6;
             overflow-x: hidden;
+            transition: background 0.4s, color 0.4s;
         }
-        :root {
-            --cloud: #e8e4df;
-            --cloud-dark: #d4cfc8;
-            --warm-black: #1c1c1c;
-            --warm-gray: #6b6560;
-            --accent: #8b7355;
-            --accent-light: #c4b5a5;
-            --white: #ffffff;
+
+        /* Светлая тема (по умолчанию) */
+        [data-theme="light"] {
+            --bg: #f5f3f0;
+            --bg-card: #ffffff;
+            --bg-nav: rgba(245,243,240,0.96);
+            --text: #1a1a1a;
+            --text-secondary: #6b6560;
             --border: #e0dbd5;
+            --accent: #8b7355;
+            --accent-hover: #6b5a45;
             --shadow: 0 4px 24px rgba(0,0,0,0.04);
-            --radius: 14px;
+            --hero-bg: linear-gradient(135deg, #f5f3f0 0%, #e8e4df 50%, #f5f3f0 100%);
+            --filter-bg: #ffffff;
+            --filter-text: #1a1a1a;
+            --tag-bg: #ffffff;
+            --tag-text: #1a1a1a;
+            --footer-border: #e0dbd5;
         }
+
+        /* Тёмная тема */
+        [data-theme="dark"] {
+            --bg: #1a1816;
+            --bg-card: #252320;
+            --bg-nav: rgba(26,24,22,0.96);
+            --text: #e8e4df;
+            --text-secondary: #9a928b;
+            --border: #3a3530;
+            --accent: #c4a87c;
+            --accent-hover: #d4bc95;
+            --shadow: 0 4px 24px rgba(0,0,0,0.2);
+            --hero-bg: linear-gradient(135deg, #1a1816 0%, #231f1b 50%, #1a1816 100%);
+            --filter-bg: #252320;
+            --filter-text: #e8e4df;
+            --tag-bg: #252320;
+            --tag-text: #e8e4df;
+            --footer-border: #3a3530;
+        }
+
+        body { background: var(--bg); color: var(--text); }
 
         /* Навигация */
         nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(245,243,240,0.96); backdrop-filter: blur(15px);
+            background: var(--bg-nav); backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border); padding: 0 16px;
         }
         .nav-inner {
             max-width: 1100px; margin: 0 auto; display: flex;
-            justify-content: space-between; align-items: center; height: 60px;
+            justify-content: space-between; align-items: center; height: 60px; gap: 12px;
         }
         .nav-logo {
-            font-weight: 700; font-size: 20px; color: var(--warm-black); text-decoration: none;
+            font-weight: 700; font-size: 20px; color: var(--text); text-decoration: none;
             letter-spacing: -0.5px;
         }
         .nav-logo span { color: var(--accent); }
@@ -49,13 +77,20 @@
             font-size: 11px; color: #4a9e4a; font-weight: 600; display: flex; align-items: center; gap: 6px;
         }
         .nav-status::before { content: ''; width: 7px; height: 7px; background: #4a9e4a; border-radius: 50%; display: inline-block; }
-        .nav-links { display: flex; gap: 18px; list-style: none; flex-wrap: wrap; }
+        .nav-links { display: flex; gap: 14px; list-style: none; flex-wrap: wrap; }
         .nav-links a {
-            color: var(--warm-gray); text-decoration: none; font-size: 11px;
+            color: var(--text-secondary); text-decoration: none; font-size: 11px;
             letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; transition: color 0.3s;
         }
         .nav-links a:hover { color: var(--accent); }
-        .menu-toggle { display: none; background: none; border: none; color: var(--warm-black); font-size: 24px; cursor: pointer; }
+        .nav-actions { display: flex; gap: 8px; align-items: center; }
+        .theme-toggle {
+            background: none; border: 1px solid var(--border); color: var(--text);
+            width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 16px;
+            transition: 0.3s; display: flex; align-items: center; justify-content: center;
+        }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+        .menu-toggle { display: none; background: none; border: none; color: var(--text); font-size: 24px; cursor: pointer; }
 
         /* Секции */
         section { padding: 70px 16px; max-width: 1000px; margin: 0 auto; }
@@ -64,10 +99,10 @@
             text-transform: uppercase; margin-bottom: 8px; font-weight: 600;
         }
         .section-title {
-            font-size: clamp(26px, 4.5vw, 38px); color: var(--warm-black);
+            font-size: clamp(26px, 4.5vw, 38px); color: var(--text);
             margin-bottom: 10px; font-weight: 700; letter-spacing: -0.5px;
         }
-        .section-desc { color: var(--warm-gray); font-size: 14px; margin-bottom: 35px; }
+        .section-desc { color: var(--text-secondary); font-size: 14px; margin-bottom: 35px; }
         .fade-up { opacity: 0; transform: translateY(25px); transition: 0.7s ease; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
@@ -77,7 +112,7 @@
             padding: 13px 28px; text-decoration: none; font-size: 12px; font-weight: 600;
             border-radius: 8px; transition: 0.3s; border: none; cursor: pointer; letter-spacing: 1px;
         }
-        .btn-accent:hover { background: #6b5a45; box-shadow: 0 8px 24px rgba(139,115,85,0.3); }
+        .btn-accent:hover { background: var(--accent-hover); box-shadow: 0 8px 24px rgba(139,115,85,0.3); }
         .btn-outline {
             display: inline-block; border: 1.5px solid var(--accent); color: var(--accent);
             padding: 13px 28px; text-decoration: none; font-size: 12px; font-weight: 600;
@@ -88,81 +123,85 @@
         /* Обложка */
         .hero {
             min-height: 85vh; display: flex; align-items: center;
-            background: linear-gradient(135deg, #f5f3f0 0%, #e8e4df 50%, #f5f3f0 100%);
+            background: var(--hero-bg);
             position: relative; overflow: hidden; padding: 100px 16px 60px;
         }
         .hero-inner { max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 30px; align-items: center; }
         .hero-text { flex: 1 1 350px; }
         .hero-text h1 { font-size: clamp(34px, 6vw, 52px); font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
         .hero-text h1 span { color: var(--accent); }
-        .hero-text p { color: var(--warm-gray); font-size: 15px; margin-bottom: 24px; }
+        .hero-text p { color: var(--text-secondary); font-size: 15px; margin-bottom: 24px; }
         .hero-features { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
         .feature-tag {
-            background: #fff; border: 1px solid var(--border); padding: 6px 14px;
-            border-radius: 20px; font-size: 11px; color: var(--warm-black); white-space: nowrap;
+            background: var(--tag-bg); border: 1px solid var(--border); padding: 6px 14px;
+            border-radius: 20px; font-size: 11px; color: var(--tag-text); white-space: nowrap;
         }
         .hero-visual {
             flex: 1 1 300px; min-height: 320px;
-            background: url('https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
-            border-radius: var(--radius); box-shadow: var(--shadow);
+            background: var(--bg-card) url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%238b7355" opacity="0.15"><circle cx="50" cy="50" r="30"/><circle cx="35" cy="35" r="15"/><circle cx="65" cy="40" r="12"/><circle cx="50" cy="65" r="10"/></svg>') center/60% no-repeat;
+            border-radius: 14px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
         }
+        .hero-visual span { color: var(--text-secondary); font-size: 12px; }
 
         /* Каталог */
         .catalog-filters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 30px; }
         .filter-btn {
-            padding: 8px 18px; border: 1px solid var(--border); background: #fff;
+            padding: 8px 18px; border: 1px solid var(--border); background: var(--filter-bg);
             border-radius: 20px; font-size: 12px; cursor: pointer; transition: 0.3s;
-            font-family: 'Inter', sans-serif; color: var(--warm-black);
+            font-family: 'Inter', sans-serif; color: var(--filter-text);
         }
         .filter-btn.active, .filter-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
         .catalog-item {
-            background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
             padding: 20px; display: flex; justify-content: space-between; align-items: start;
             transition: 0.3s;
         }
         .catalog-item:hover { box-shadow: var(--shadow); }
-        .catalog-info h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; color: var(--warm-black); }
-        .catalog-info .desc { font-size: 11px; color: var(--warm-gray); max-width: 240px; line-height: 1.5; }
+        .catalog-info h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+        .catalog-info .desc { font-size: 11px; color: var(--text-secondary); max-width: 240px; line-height: 1.5; }
         .catalog-price { font-weight: 700; font-size: 16px; color: var(--accent); white-space: nowrap; }
 
         /* Отзывы */
-        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
         .review-card {
-            background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
             padding: 20px;
         }
         .review-stars { color: #f0b90b; font-size: 14px; margin-bottom: 6px; }
         .review-name { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
-        .review-date { font-size: 11px; color: var(--warm-gray); margin-bottom: 8px; }
-        .review-text { font-size: 12px; color: var(--warm-black); line-height: 1.6; }
+        .review-date { font-size: 11px; color: var(--text-secondary); margin-bottom: 8px; }
+        .review-text { font-size: 12px; line-height: 1.6; }
         .review-rating-big { text-align: center; margin-bottom: 30px; }
         .review-rating-big .big-num { font-size: 56px; font-weight: 800; color: var(--accent); }
-        .review-rating-big .big-label { font-size: 13px; color: var(--warm-gray); }
+        .review-rating-big .big-label { font-size: 13px; color: var(--text-secondary); }
 
         /* Галерея */
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
-        .gallery-grid img {
-            width: 100%; height: 180px; object-fit: cover; border-radius: var(--radius);
-            transition: opacity 0.3s;
+        .gallery-slot {
+            aspect-ratio: 1 / 1; background: var(--bg-card); border: 2px dashed var(--border);
+            border-radius: 14px; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; color: var(--text-secondary); font-size: 12px; gap: 8px;
+            transition: 0.3s; cursor: default;
         }
-        .gallery-grid img:hover { opacity: 0.85; }
+        .gallery-slot:hover { border-color: var(--accent); color: var(--accent); }
+        .gallery-slot .icon { font-size: 28px; opacity: 0.5; }
 
         /* Контакты */
         .contact-row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; text-align: center; }
         .contact-card {
-            flex: 1 1 200px; background: #fff; border: 1px solid var(--border);
-            border-radius: var(--radius); padding: 22px;
+            flex: 1 1 200px; background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 14px; padding: 22px;
         }
         .contact-card h4 { color: var(--accent); letter-spacing: 2px; font-size: 10px; text-transform: uppercase; margin-bottom: 6px; }
-        .contact-card p { font-size: 14px; font-weight: 600; color: var(--warm-black); }
+        .contact-card p { font-size: 14px; font-weight: 600; }
         .social-links { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
 
-        footer { text-align: center; padding: 30px; color: var(--warm-gray); font-size: 11px; border-top: 1px solid var(--border); margin-top: 20px; }
+        footer { text-align: center; padding: 30px; color: var(--text-secondary); font-size: 11px; border-top: 1px solid var(--footer-border); margin-top: 20px; }
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
-            .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 60px; left: 0; width: 100%; background: #f5f3f0; padding: 16px; gap: 12px; border-bottom: 1px solid var(--border); }
+            .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 60px; left: 0; width: 100%; background: var(--bg); padding: 16px; gap: 12px; border-bottom: 1px solid var(--border); }
             .menu-toggle { display: block; }
             section { padding: 50px 14px; }
         }
@@ -182,6 +221,7 @@
             <li><a href="#gallery">Фото</a></li>
             <li><a href="#contacts">Контакты</a></li>
         </ul>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Сменить тему" id="themeBtn">🌙</button>
     </div>
 </nav>
 
@@ -201,7 +241,7 @@
             </div>
             <a href="#catalog" class="btn-accent">Смотреть каталог</a>
         </div>
-        <div class="hero-visual fade-up" title="Кальян-бар Облако"></div>
+        <div class="hero-visual fade-up"><span>Ваше фото здесь</span></div>
     </div>
 </section>
 
@@ -219,93 +259,54 @@
         <button class="filter-btn" onclick="filterCatalog('steam', this)">Паровые Коктейли</button>
     </div>
     <div class="catalog-grid fade-up" id="catalogGrid">
-        <!-- Пиво -->
         <div class="catalog-item" data-category="beer">
-            <div class="catalog-info">
-                <h4>HONEY «МЕДОВОЕ ИГРИСТОЕ АСТИ ШАМПАНЬ»</h4>
-                <p class="desc">Медовуха фильтрованная пастеризованная. Россия. 5,5% алк.</p>
-            </div>
+            <div class="catalog-info"><h4>HONEY «МЕДОВОЕ ИГРИСТОЕ АСТИ ШАМПАНЬ»</h4><p class="desc">Медовуха фильтрованная пастеризованная. Россия. 5,5% алк.</p></div>
             <div class="catalog-price">450 ₽</div>
         </div>
         <div class="catalog-item" data-category="beer">
-            <div class="catalog-info">
-                <h4>ВАСИЛЕОСТРОВСКОЕ «СИДР ИГРИСТЫЙ ПОЛУСУХОЙ»</h4>
-                <p class="desc">Сидр полусухой игристый натуральный. Россия. 4,7% алк.</p>
-            </div>
+            <div class="catalog-info"><h4>ВАСИЛЕОСТРОВСКОЕ «СИДР ИГРИСТЫЙ ПОЛУСУХОЙ»</h4><p class="desc">Сидр полусухой игристый натуральный. Россия. 4,7% алк.</p></div>
             <div class="catalog-price">500 ₽</div>
         </div>
         <div class="catalog-item" data-category="beer">
-            <div class="catalog-info">
-                <h4>ВАСИЛЕОСТРОВСКОЕ «СИНЯЯ БОРОДА»</h4>
-                <p class="desc">Темное нефильтрованное. Россия. 8% алк.</p>
-            </div>
+            <div class="catalog-info"><h4>ВАСИЛЕОСТРОВСКОЕ «СИНЯЯ БОРОДА»</h4><p class="desc">Темное нефильтрованное. Россия. 8% алк.</p></div>
             <div class="catalog-price">500 ₽</div>
         </div>
         <div class="catalog-item" data-category="beer">
-            <div class="catalog-info">
-                <h4>ВАСИЛЕОСТРОВСКОЕ «ТРОЙНОЙ ПШЕНИЧНЫЙ ЭЛЬ»</h4>
-                <p class="desc">Нефильтрованное непастеризованное осветленное. Россия. 7,5% алк.</p>
-            </div>
+            <div class="catalog-info"><h4>ВАСИЛЕОСТРОВСКОЕ «ТРОЙНОЙ ПШЕНИЧНЫЙ ЭЛЬ»</h4><p class="desc">Нефильтрованное непастеризованное осветленное. Россия. 7,5% алк.</p></div>
             <div class="catalog-price">500 ₽</div>
         </div>
         <div class="catalog-item" data-category="beer">
-            <div class="catalog-info">
-                <h4>GLETCHER «MILK OF AMNESIA TROPIC»</h4>
-                <p class="desc">Светлое нефильтрованное непастеризованное. Россия. 5,5% алк.</p>
-            </div>
+            <div class="catalog-info"><h4>GLETCHER «MILK OF AMNESIA TROPIC»</h4><p class="desc">Светлое нефильтрованное непастеризованное. Россия. 5,5% алк.</p></div>
             <div class="catalog-price">400 ₽</div>
         </div>
         <div class="catalog-item" data-category="beer">
-            <div class="catalog-info">
-                <h4>GLETCHER «NUT BUTTER»</h4>
-                <p class="desc">Темное нефильтрованное непастеризованное. Россия. 5,5% алк.</p>
-            </div>
+            <div class="catalog-info"><h4>GLETCHER «NUT BUTTER»</h4><p class="desc">Темное нефильтрованное непастеризованное. Россия. 5,5% алк.</p></div>
             <div class="catalog-price">400 ₽</div>
         </div>
         <div class="catalog-item" data-category="beer">
-            <div class="catalog-info">
-                <h4>«FRANZISKANER» HEFE-WEISSE</h4>
-                <p class="desc">Светлое нефильтрованное. Германия. 5% алк.</p>
-            </div>
+            <div class="catalog-info"><h4>«FRANZISKANER» HEFE-WEISSE</h4><p class="desc">Светлое нефильтрованное. Германия. 5% алк.</p></div>
             <div class="catalog-price">220 ₽</div>
         </div>
         <div class="catalog-item" data-category="beer">
-            <div class="catalog-info">
-                <h4>SPATEN MUNCHEN</h4>
-                <p class="desc">Лагер. Светлое фильтрованное. Россия. 5,2% алк.</p>
-            </div>
+            <div class="catalog-info"><h4>SPATEN MUNCHEN</h4><p class="desc">Лагер. Светлое фильтрованное. Россия. 5,2% алк.</p></div>
             <div class="catalog-price">220 ₽</div>
         </div>
         <div class="catalog-item" data-category="beer">
-            <div class="catalog-info">
-                <h4>«BERGAUER» BLANCHE</h4>
-                <p class="desc">Светлое нефильтрованное пастеризованное. Россия. 4% алк.</p>
-            </div>
-            <div class="catalog-price">200 ₽</div>
-        </div>
-        <!-- Снеки -->
-        <div class="catalog-item" data-category="snacks">
-            <div class="catalog-info">
-                <h4>МЯСО ВЯЛЕНОЕ «BIG ENERGY»</h4>
-                <p class="desc">На выбор: оленина, индейка и курица. В составе только мясо и специи.</p>
-            </div>
+            <div class="catalog-info"><h4>«BERGAUER» BLANCHE</h4><p class="desc">Светлое нефильтрованное пастеризованное. Россия. 4% алк.</p></div>
             <div class="catalog-price">200 ₽</div>
         </div>
         <div class="catalog-item" data-category="snacks">
-            <div class="catalog-info">
-                <h4>ФИСТАШКИ</h4>
-                <p class="desc">Соленые жаренные.</p>
-            </div>
+            <div class="catalog-info"><h4>МЯСО ВЯЛЕНОЕ «BIG ENERGY»</h4><p class="desc">На выбор: оленина, индейка и курица. В составе только мясо и специи.</p></div>
+            <div class="catalog-price">200 ₽</div>
+        </div>
+        <div class="catalog-item" data-category="snacks">
+            <div class="catalog-info"><h4>ФИСТАШКИ</h4><p class="desc">Соленые жаренные.</p></div>
             <div class="catalog-price">120 ₽</div>
         </div>
         <div class="catalog-item" data-category="snacks">
-            <div class="catalog-info">
-                <h4>МИНДАЛЬ КОПЧЕНЫЙ</h4>
-                <p class="desc">Соленый маслянистый вкус орехов идеально подойдет в качестве закуски.</p>
-            </div>
+            <div class="catalog-info"><h4>МИНДАЛЬ КОПЧЕНЫЙ</h4><p class="desc">Соленый маслянистый вкус орехов идеально подойдет в качестве закуски.</p></div>
             <div class="catalog-price">120 ₽</div>
         </div>
-        <!-- Заглушки для остальных категорий -->
         <div class="catalog-item" data-category="fruit">
             <div class="catalog-info"><h4>Фруктовая чаша (ассорти)</h4><p class="desc">Сезонные фрукты, подача на выбор.</p></div>
             <div class="catalog-price">от 800 ₽</div>
@@ -338,13 +339,13 @@
             <div class="review-stars">★★★★★</div>
             <div class="review-name">Константин Ш.</div>
             <div class="review-date">21 мая</div>
-            <div class="review-text">В конце апреля провели 4 дня своего отпуска в Муроме, и по вечерам этих дней стали клиентами Облака. Мы с супругой во время отпусков посещаем кальянные вечерами, есть определённый опыт, но здесь ребята удивили. Обстановка на пять, кальяны 5+, но самое главное — отношение. Помимо заботы, нам продемонстрировали новый уровень мастерства в приготовлении кальянов. Это восторг.</div>
+            <div class="review-text">В конце апреля провели 4 дня отпуска в Муроме, и по вечерам этих дней стали клиентами Облака. Мы с супругой посещаем кальянные, есть опыт, но здесь ребята удивили. Обстановка на пять, кальяны 5+, но самое главное — отношение. Это восторг.</div>
         </div>
         <div class="review-card">
             <div class="review-stars">★★★★★</div>
             <div class="review-name">Марина Толкачева</div>
             <div class="review-date">28 марта</div>
-            <div class="review-text">Отличное место, хороший кальян, вкусные коктейли, прекрасное обслуживание, нам всё очень понравилось, сотрудники задержались ради гостей позже графика закрытия, мы прекрасно провели время. Спасибо!</div>
+            <div class="review-text">Отличное место, хороший кальян, вкусные коктейли, прекрасное обслуживание, нам всё очень понравилось! Спасибо!</div>
         </div>
         <div class="review-card">
             <div class="review-stars">★★★★★</div>
@@ -356,7 +357,7 @@
             <div class="review-stars">★★★★★</div>
             <div class="review-name">Дмитрий Акимов</div>
             <div class="review-date">17 марта</div>
-            <div class="review-text">Отличное заведение где можно отдохнуть, вежливый персонал.</div>
+            <div class="review-text">Отличное заведение, где можно отдохнуть. Вежливый персонал.</div>
         </div>
     </div>
 </section>
@@ -364,12 +365,15 @@
 <!-- ГАЛЕРЕЯ -->
 <section id="gallery">
     <p class="section-tag fade-up">Фото</p>
-    <h2 class="section-title fade-up">Атмосфера</h2>
+    <h2 class="section-title fade-up">Атмосфера внутри</h2>
+    <p class="section-desc fade-up" style="text-align:center;">Здесь будут ваши реальные фотографии</p>
     <div class="gallery-grid fade-up">
-        <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=400&auto=format&fit=crop" alt="Интерьер" loading="lazy">
-        <img src="https://images.unsplash.com/photo-1569529653533-fa7548e7e75a?q=80&w=400&auto=format&fit=crop" alt="Кальян" loading="lazy">
-        <img src="https://images.unsplash.com/photo-1572119865084-43c285814d63?q=80&w=400&auto=format&fit=crop" alt="Бар" loading="lazy">
-        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=400&auto=format&fit=crop" alt="Коктейль" loading="lazy">
+        <div class="gallery-slot"><span class="icon">📸</span><span>Интерьер</span></div>
+        <div class="gallery-slot"><span class="icon">📸</span><span>Бар</span></div>
+        <div class="gallery-slot"><span class="icon">📸</span><span>Кальян</span></div>
+        <div class="gallery-slot"><span class="icon">📸</span><span>Гости</span></div>
+        <div class="gallery-slot"><span class="icon">📸</span><span>Коктейли</span></div>
+        <div class="gallery-slot"><span class="icon">📸</span><span>Танцпол</span></div>
     </div>
 </section>
 
@@ -378,18 +382,9 @@
     <p class="section-tag fade-up">Контакты</p>
     <h2 class="section-title fade-up">Приходите</h2>
     <div class="contact-row fade-up">
-        <div class="contact-card">
-            <h4>Адрес</h4>
-            <p>г. Муром<br>Московская улица, 19</p>
-        </div>
-        <div class="contact-card">
-            <h4>Телефон</h4>
-            <p>+7 (920) 900-**-**</p>
-        </div>
-        <div class="contact-card">
-            <h4>Режим работы</h4>
-            <p>Ежедневно<br>с 14:00 до 02:00</p>
-        </div>
+        <div class="contact-card"><h4>Адрес</h4><p>г. Муром<br>Московская улица, 19</p></div>
+        <div class="contact-card"><h4>Телефон</h4><p>+7 (920) 900-**-**</p></div>
+        <div class="contact-card"><h4>Режим работы</h4><p>Ежедневно<br>с 14:00 до 02:00</p></div>
     </div>
     <div class="social-links fade-up">
         <a href="#" class="btn-outline">VK</a>
@@ -418,13 +413,32 @@
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         document.querySelectorAll('.catalog-item').forEach(item => {
-            if (category === 'all' || item.dataset.category === category) {
-                item.style.display = 'flex';
-            } else {
-                item.style.display = 'none';
-            }
+            item.style.display = (category === 'all' || item.dataset.category === category) ? 'flex' : 'none';
         });
     }
+
+    function toggleTheme() {
+        const html = document.documentElement;
+        const btn = document.getElementById('themeBtn');
+        if (html.getAttribute('data-theme') === 'light') {
+            html.setAttribute('data-theme', 'dark');
+            btn.textContent = '☀️';
+            localStorage.setItem('oblako-theme', 'dark');
+        } else {
+            html.setAttribute('data-theme', 'light');
+            btn.textContent = '🌙';
+            localStorage.setItem('oblako-theme', 'light');
+        }
+    }
+
+    // Сохраняем тему при перезагрузке
+    (function() {
+        const saved = localStorage.getItem('oblako-theme');
+        if (saved === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('themeBtn').textContent = '☀️';
+        }
+    })();
 </script>
 </body>
 </html>
