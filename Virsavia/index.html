@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>ГРК Вирсавия | Гостиница • Ресторан • Сауна | Муром</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #fafaf8;
+            font-family: 'Inter', sans-serif;
+            color: #2c2416;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        :root {
+            --gold: #b8944b;
+            --gold-light: #d4bc7a;
+            --gold-bg: #fdf8f0;
+            --cream: #f5efe0;
+            --brown: #5c4a2b;
+            --brown-dark: #3d2e1a;
+            --text: #2c2416;
+            --text-light: #6b5d4a;
+            --white: #ffffff;
+            --border: #e5ddd0;
+            --shadow: 0 4px 30px rgba(0,0,0,0.05);
+            --radius: 12px;
+        }
+
+        /* Навигация */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(250,250,248,0.97); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border); padding: 0 20px;
+        }
+        .nav-inner {
+            max-width: 1200px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; height: 70px;
+        }
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif; font-size: 28px;
+            color: var(--brown-dark); text-decoration: none; font-weight: 600; letter-spacing: 1px;
+        }
+        .nav-logo span { color: var(--gold); }
+        .nav-links { display: flex; gap: 22px; list-style: none; flex-wrap: wrap; }
+        .nav-links a {
+            color: var(--text-light); text-decoration: none; font-size: 12px;
+            letter-spacing: 2px; text-transform: uppercase; font-weight: 500; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-phone {
+            color: var(--brown-dark); font-weight: 600; font-size: 14px; text-decoration: none;
+        }
+        .nav-phone:hover { color: var(--gold); }
+        .menu-toggle { display: none; background: none; border: none; color: var(--gold); font-size: 26px; cursor: pointer; }
+
+        /* Секции */
+        section { padding: 80px 20px; max-width: 1140px; margin: 0 auto; }
+        .section-tag {
+            text-align: center; font-size: 10px; letter-spacing: 4px;
+            color: var(--gold); text-transform: uppercase; margin-bottom: 12px; font-weight: 600;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 5vw, 46px);
+            color: var(--brown-dark); text-align: center; margin-bottom: 12px; font-weight: 600;
+        }
+        .section-desc {
+            text-align: center; color: var(--text-light); max-width: 600px;
+            margin: 0 auto 45px; font-size: 15px; font-style: italic;
+        }
+        .gold-line { width: 80px; height: 1.5px; background: var(--gold); margin: 0 auto 40px; }
+        .fade-up { opacity: 0; transform: translateY(30px); transition: 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Кнопки */
+        .btn-gold {
+            display: inline-block; border: 1.5px solid var(--gold); color: var(--gold);
+            padding: 14px 36px; text-decoration: none; font-size: 11px; letter-spacing: 3px;
+            text-transform: uppercase; transition: 0.4s; background: transparent; font-weight: 600;
+        }
+        .btn-gold:hover { background: var(--gold); color: #fff; box-shadow: 0 8px 28px rgba(184,148,75,0.35); }
+        .btn-filled {
+            display: inline-block; background: var(--gold); color: #fff;
+            padding: 14px 36px; text-decoration: none; font-size: 11px; letter-spacing: 3px;
+            text-transform: uppercase; transition: 0.4s; font-weight: 600; border: 1.5px solid var(--gold);
+        }
+        .btn-filled:hover { background: var(--brown); border-color: var(--brown); box-shadow: 0 8px 28px rgba(92,74,43,0.35); }
+
+        /* Обложка */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            position: relative;
+        }
+        .hero-content h1 {
+            font-family: 'Cormorant Garamond', serif; font-size: clamp(42px, 9vw, 80px);
+            color: #fff; font-weight: 600; letter-spacing: 2px; margin-bottom: 8px;
+        }
+        .hero-content h1 em { color: var(--gold-light); font-style: italic; }
+        .hero-subtitle { font-size: 13px; letter-spacing: 5px; color: #ddd; text-transform: uppercase; margin-bottom: 35px; }
+
+        /* Об отеле */
+        .about-grid { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; }
+        .about-text { flex: 1 1 350px; }
+        .about-text p { color: var(--text-light); font-size: 14px; margin-bottom: 14px; }
+        .about-text .highlight {
+            font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--brown-dark);
+            font-style: italic; margin: 18px 0; line-height: 1.5;
+        }
+        .about-image {
+            flex: 1 1 350px; min-height: 380px;
+            background: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
+            border-radius: var(--radius);
+        }
+
+        /* Номера */
+        .rooms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 22px; }
+        .room-card {
+            background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+            overflow: hidden; transition: 0.3s;
+        }
+        .room-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
+        .room-photo { height: 200px; background: var(--cream) center/cover no-repeat; }
+        .room-info { padding: 20px; }
+        .room-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--brown-dark); margin-bottom: 6px; }
+        .room-desc { color: var(--text-light); font-size: 13px; }
+        .room-price { font-weight: 700; color: var(--gold); margin-top: 10px; font-size: 18px; }
+
+        /* Ресторан */
+        .restaurant-block { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; }
+        .restaurant-photo {
+            flex: 1 1 350px; min-height: 350px;
+            background: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
+            border-radius: var(--radius);
+        }
+        .restaurant-text { flex: 1 1 350px; }
+        .restaurant-text h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--brown-dark); margin-bottom: 12px; }
+        .restaurant-text p { color: var(--text-light); font-size: 14px; margin-bottom: 10px; }
+        .restaurant-features { list-style: none; margin: 15px 0; }
+        .restaurant-features li { padding: 6px 0; color: var(--text-light); font-size: 13px; border-bottom: 1px dotted var(--border); }
+
+        /* Сауна */
+        .sauna-block { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; }
+        .sauna-text { flex: 1 1 350px; }
+        .sauna-text h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--brown-dark); margin-bottom: 12px; }
+        .sauna-text p { color: var(--text-light); font-size: 14px; }
+        .sauna-photo {
+            flex: 1 1 350px; min-height: 300px;
+            background: url('https://images.unsplash.com/photo-1545579133-99bb5ab189bd?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
+            border-radius: var(--radius);
+        }
+
+        /* Банкеты */
+        .banquet-cards { display: flex; flex-wrap: wrap; gap: 22px; justify-content: center; }
+        .banquet-card {
+            background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 30px; flex: 1 1 280px; max-width: 370px; text-align: center; transition: 0.3s;
+        }
+        .banquet-card:hover { box-shadow: var(--shadow); border-color: var(--gold); }
+        .banquet-icon { font-size: 38px; margin-bottom: 12px; }
+        .banquet-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--brown-dark); margin-bottom: 8px; }
+        .banquet-desc { color: var(--text-light); font-size: 13px; }
+
+        /* Услуги */
+        .services-list { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; max-width: 700px; margin: 0 auto; }
+        .service-tag {
+            background: var(--gold-bg); border: 1px solid var(--border);
+            padding: 10px 18px; border-radius: 20px; font-size: 12px; color: var(--brown-dark);
+        }
+
+        /* Форма */
+        .booking-form {
+            max-width: 520px; margin: 0 auto; background: #fff;
+            border: 1px solid var(--border); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow);
+        }
+        .form-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
+        .form-field { flex: 1 1 200px; }
+        .form-field label { display: block; font-size: 9px; letter-spacing: 2px; color: var(--text-light); margin-bottom: 4px; text-transform: uppercase; font-weight: 700; }
+        .form-field input, .form-field select {
+            width: 100%; padding: 11px 14px; background: #fafaf8; border: 1px solid var(--border);
+            border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text);
+        }
+        .btn-submit {
+            width: 100%; padding: 15px; background: var(--gold); border: none;
+            color: #fff; font-size: 12px; font-weight: 700; border-radius: 8px;
+            cursor: pointer; transition: 0.3s; letter-spacing: 2px; text-transform: uppercase;
+        }
+        .btn-submit:hover { background: var(--brown); }
+
+        /* Контакты */
+        .contact-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; text-align: center; }
+        .contact-card {
+            flex: 1 1 200px; background: #fff; border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 22px;
+        }
+        .contact-card h4 { color: var(--gold); letter-spacing: 2px; font-size: 10px; text-transform: uppercase; margin-bottom: 6px; }
+        .contact-card p { font-size: 16px; font-weight: 600; color: var(--brown-dark); }
+        .contact-card small { font-size: 11px; color: var(--text-light); }
+
+        /* Календарь */
+        .calendar-block {
+            max-width: 400px; margin: 0 auto; background: #fff;
+            border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+        }
+        .calendar-header {
+            background: var(--brown-dark); color: #fff; text-align: center;
+            padding: 14px; font-family: 'Cormorant Garamond', serif; font-size: 20px;
+        }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; padding: 10px; }
+        .calendar-grid span { padding: 8px; font-size: 12px; color: var(--text-light); }
+        .calendar-grid .day { color: var(--text); cursor: pointer; border-radius: 50%; transition: 0.2s; }
+        .calendar-grid .day:hover { background: var(--gold-bg); color: var(--gold); }
+        .calendar-grid .day.today { background: var(--gold); color: #fff; font-weight: 700; }
+
+        footer {
+            background: var(--brown-dark); text-align: center; padding: 30px 20px;
+            color: #a99; font-size: 11px;
+        }
+        footer a { color: var(--gold-light); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-phone { display: none; }
+            .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: #fafaf8; padding: 20px; gap: 14px; border-bottom: 1px solid var(--border); }
+            .menu-toggle { display: block; }
+            section { padding: 50px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- НАВИГАЦИЯ -->
+<nav>
+    <div class="nav-inner">
+        <a href="#home" class="nav-logo">Вир<span>савия</span></a>
+        <button class="menu-toggle" onclick="document.getElementById('navMenu').classList.toggle('open')">☰</button>
+        <ul class="nav-links" id="navMenu">
+            <li><a href="#about">Об отеле</a></li>
+            <li><a href="#rooms">Номера</a></li>
+            <li><a href="#restaurant">Ресторан</a></li>
+            <li><a href="#sauna">Сауна</a></li>
+            <li><a href="#banquet">Банкеты</a></li>
+            <li><a href="#gallery">Фотографии</a></li>
+            <li><a href="#contacts">Контакты</a></li>
+        </ul>
+        <a href="tel:84923431007" class="nav-phone">8 (49234) 3-10-07</a>
+    </div>
+</nav>
+
+<!-- ОБЛОЖКА -->
+<section class="hero" id="home">
+    <div class="hero-content fade-up">
+        <h1>Вир<em>савия</em></h1>
+        <p class="hero-subtitle">Гостинично-ресторанный комплекс • Муром</p>
+        <a href="#booking" class="btn-filled">Забронировать номер</a>
+    </div>
+</section>
+
+<!-- ОБ ОТЕЛЕ -->
+<section id="about">
+    <p class="section-tag fade-up">Добро пожаловать</p>
+    <h2 class="section-title fade-up">Отель европейского образца</h2>
+    <div class="gold-line fade-up"></div>
+    <div class="about-grid fade-up">
+        <div class="about-text">
+            <p>Гостинично-ресторанный комплекс «Вирсавия» открылся 27 января 2011 года в самом сердце древнего Мурома — на улице Октябрьской, 2А, в шаговой доступности от набережной Оки и Спасо-Преображенского монастыря, построенного по приказу Ивана Грозного в середине XVI века.</p>
+            <p>Трёхэтажное здание с оригинальной архитектурой, уютные номера, ресторан русской и европейской кухни, сауна — всё для спокойного и изысканного отдыха.</p>
+            <div class="highlight">«Вирсавия» — отель европейского образца с щедростью российского гостеприимства.</div>
+            <p>Расположение на 3 этаже здания позволяет любоваться красотами древнего города. Для Вас 7 уютных номеров: одноместные, двухместные, Люкс и VIP. Каждый номер оформлен в спокойных тонах, что создаёт приятную атмосферу для отдыха после экскурсий или трудового дня.</p>
+        </div>
+        <div class="about-image" title="Вирсавия — вид из окна"></div>
+    </div>
+</section>
+
+<!-- НОМЕРА -->
+<section id="rooms">
+    <p class="section-tag fade-up">Проживание</p>
+    <h2 class="section-title fade-up">Наши номера</h2>
+    <div class="gold-line fade-up"></div>
+    <div class="rooms-grid fade-up">
+        <div class="room-card">
+            <div class="room-photo" style="background-image: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=800&auto=format&fit=crop');"></div>
+            <div class="room-info">
+                <div class="room-name">Одноместный</div>
+                <div class="room-desc">Уютный номер для одного гостя. Вид на город, всё необходимое для комфортного отдыха.</div>
+                <div class="room-price">от 2 500 ₽</div>
+            </div>
+        </div>
+        <div class="room-card">
+            <div class="room-photo" style="background-image: url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=800&auto=format&fit=crop');"></div>
+            <div class="room-info">
+                <div class="room-name">Двухместный</div>
+                <div class="room-desc">Просторный номер для двоих. Спокойные тона, удобная мебель, атмосфера уюта.</div>
+                <div class="room-price">от 3 500 ₽</div>
+            </div>
+        </div>
+        <div class="room-card">
+            <div class="room-photo" style="background-image: url('https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=800&auto=format&fit=crop');"></div>
+            <div class="room-info">
+                <div class="room-name">Люкс</div>
+                <div class="room-desc">Двухкомнатный номер повышенной комфортности. Идеален для особых случаев.</div>
+                <div class="room-price">от 5 500 ₽</div>
+            </div>
+        </div>
+        <div class="room-card">
+            <div class="room-photo" style="background-image: url('https://images.unsplash.com/photo-1591088398332-8a7791972843?q=80&w=800&auto=format&fit=crop');"></div>
+            <div class="room-info">
+                <div class="room-name">VIP</div>
+                <div class="room-desc">Максимальный уровень комфорта. Панорамный вид, эксклюзивный интерьер, всё включено.</div>
+                <div class="room-price">от 8 000 ₽</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- РЕСТОРАН -->
+<section id="restaurant" style="background: var(--gold-bg); max-width: 100%;">
+    <div style="max-width: 1140px; margin: 0 auto; padding: 0 20px;">
+        <p class="section-tag fade-up">Гастрономия</p>
+        <h2 class="section-title fade-up">Ресторан «Вирсавия»</h2>
+        <div class="gold-line fade-up"></div>
+        <div class="restaurant-block fade-up">
+            <div class="restaurant-photo"></div>
+            <div class="restaurant-text">
+                <h3>Русская и европейская кухня</h3>
+                <p>На 2 этаже комплекса расположен ресторан с большим выбором блюд. Роскошно оформленный зал с музыкой и свечами, а также VIP-зал с камином.</p>
+                <ul class="restaurant-features">
+                    <li>🍽️ Основной зал — до 40 гостей</li>
+                    <li>🔥 VIP-зал с камином — до 15 гостей</li>
+                    <li>🎶 Живая музыка по вечерам</li>
+                    <li>🕯️ Ужин при свечах</li>
+                    <li>📞 Бронь: 8 (49234) 3-12-34</li>
+                </ul>
+                <a href="#booking" class="btn-gold">Забронировать столик</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- САУНА -->
+<section id="sauna">
+    <p class="section-tag fade-up">Отдых</p>
+    <h2 class="section-title fade-up">Сауна</h2>
+    <div class="gold-line fade-up"></div>
+    <div class="sauna-block fade-up">
+        <div class="sauna-text">
+            <h3>Расслабление после дороги</h3>
+            <p>В распоряжении гостей — уютная сауна. Идеально после экскурсий по древнему Мурому или долгого трудового дня. Вместительность до 6 человек, комната отдыха, травяной чай включён.</p>
+            <a href="#booking" class="btn-gold" style="margin-top: 20px;">Забронировать сауну</a>
+        </div>
+        <div class="sauna-photo"></div>
+    </div>
+</section>
+
+<!-- БАНКЕТЫ -->
+<section id="banquet" style="background: var(--gold-bg); max-width: 100%;">
+    <div style="max-width: 1140px; margin: 0 auto; padding: 0 20px;">
+        <p class="section-tag fade-up">Мероприятия</p>
+        <h2 class="section-title fade-up">Оформление банкета</h2>
+        <div class="gold-line fade-up"></div>
+        <p class="section-desc fade-up">Корпоративы, дни рождения, свадьбы — в ресторане или VIP-зале с камином</p>
+        <div class="banquet-cards fade-up">
+            <div class="banquet-card">
+                <div class="banquet-icon">💼</div>
+                <div class="banquet-name">Корпоратив</div>
+                <div class="banquet-desc">Основной зал ресторана, музыка, меню под бюджет компании.</div>
+            </div>
+            <div class="banquet-card">
+                <div class="banquet-icon">🎂</div>
+                <div class="banquet-name">День рождения</div>
+                <div class="banquet-desc">VIP-зал с камином, свечи, индивидуальное оформление и торт от шеф-повара.</div>
+            </div>
+            <div class="banquet-card">
+                <div class="banquet-icon">💍</div>
+                <div class="banquet-name">Свадьба</div>
+                <div class="banquet-desc">Роскошный зал, живая музыка, праздничное меню. До 40 гостей.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ДОП. УСЛУГИ -->
+<section id="services">
+    <p class="section-tag fade-up">Удобства</p>
+    <h2 class="section-title fade-up">Дополнительные услуги</h2>
+    <div class="gold-line fade-up"></div>
+    <div class="services-list fade-up">
+        <span class="service-tag">🧥 Утюг и гладильная доска</span>
+        <span class="service-tag">🅿️ Парковка</span>
+        <span class="service-tag">⏰ Побудка к определённому времени</span>
+        <span class="service-tag">📀 Прокат DVD-проигрывателя</span>
+        <span class="service-tag">🚕 Вызов такси</span>
+    </div>
+    <p style="text-align:center; color: var(--text-light); font-size: 12px; margin-top: 15px;" class="fade-up">Все дополнительные услуги — бесплатно</p>
+</section>
+
+<!-- КАЛЕНДАРЬ -->
+<section id="calendar">
+    <p class="section-tag fade-up">Даты</p>
+    <h2 class="section-title fade-up">Июнь 2026</h2>
+    <div class="gold-line fade-up"></div>
+    <div class="calendar-block fade-up">
+        <div class="calendar-header">Июнь 2026</div>
+        <div class="calendar-grid">
+            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            <span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span><span class="day">6</span><span class="day">7</span>
+            <span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day">12</span><span class="day">13</span><span class="day">14</span>
+            <span class="day today">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span><span class="day">20</span><span class="day">21</span>
+            <span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span><span class="day">26</span><span class="day">27</span><span class="day">28</span>
+            <span class="day">29</span><span class="day">30</span>
+        </div>
+    </div>
+</section>
+
+<!-- БРОНЬ -->
+<section id="booking">
+    <p class="section-tag fade-up">Бронь</p>
+    <h2 class="section-title fade-up">Забронировать</h2>
+    <div class="gold-line fade-up"></div>
+    <div class="booking-form fade-up">
+        <div class="form-row">
+            <div class="form-field"><label>Имя</label><input type="text" placeholder="Ваше имя"></div>
+            <div class="form-field"><label>Телефон</label><input type="tel" placeholder="+7 920 123-45-67"></div>
+        </div>
+        <div class="form-row">
+            <div class="form-field">
+                <label>Что бронируем?</label>
+                <select>
+                    <option>Номер в гостинице</option>
+                    <option>Столик в ресторане</option>
+                    <option>Сауну</option>
+                    <option>Банкет / Мероприятие</option>
+                </select>
+            </div>
+            <div class="form-field"><label>Дата заезда / визита</label><input type="date"></div>
+        </div>
+        <div class="form-row">
+            <div class="form-field"><label>Количество гостей</label><input type="number" min="1" placeholder="2"></div>
+            <div class="form-field"><label>Количество ночей (для номеров)</label><input type="number" min="1" placeholder="1"></div>
+        </div>
+        <button class="btn-submit" onclick="alert('Спасибо! Ваша заявка принята. Мы перезвоним в течение 15 минут.')">Отправить заявку</button>
+    </div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section id="contacts">
+    <p class="section-tag fade-up">Контакты</p>
+    <h2 class="section-title fade-up">Как нас найти</h2>
+    <div class="gold-line fade-up"></div>
+    <div class="contact-grid fade-up">
+        <div class="contact-card">
+            <h4>Гостиница</h4>
+            <p>8 (49234) 3-10-07</p>
+        </div>
+        <div class="contact-card">
+            <h4>Ресторан</h4>
+            <p>8 (49234) 3-12-34</p>
+        </div>
+        <div class="contact-card">
+            <h4>Офис</h4>
+            <p>8 (49234) 2-01-16</p>
+        </div>
+        <div class="contact-card">
+            <h4>Почта</h4>
+            <p style="font-size: 13px;">virsaviya2011@yandex.ru</p>
+        </div>
+        <div class="contact-card">
+            <h4>Адрес</h4>
+            <p style="font-size: 14px;">г. Муром<br>ул. Октябрьская, 2А</p>
+            <small>Рядом со Спасо-Преображенским монастырём и набережной Оки</small>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>ГРК «Вирсавия» • г. Муром, ул. Октябрьская, 2А</p>
+    <p>Гостиница: 8 (49234) 3-10-07 • Ресторан: 8 (49234) 3-12-34 • Офис: 8 (49234) 2-01-16</p>
+    <p><a href="mailto:virsaviya2011@yandex.ru">virsaviya2011@yandex.ru</a></p>
+    <p style="margin-top: 10px;">Создание сайта © 2026 | Алексей</p>
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelector('.hero .fade-up')?.classList.add('visible');
+    document.querySelectorAll('#navMenu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('navMenu').classList.remove('open');
+        });
+    });
+</script>
+</body>
+</html>
