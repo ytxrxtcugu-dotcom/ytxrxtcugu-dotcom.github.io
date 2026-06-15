@@ -1,1 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>КлишеКофе | Спешалти кофейня | Муром</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #faf9f6;
+            font-family: 'Inter', sans-serif;
+            color: #2b2b2b;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        :root {
+            --warm-black: #1f1f1f;
+            --warm-gray: #6b6b6b;
+            --warm-light: #f0ede6;
+            --cream: #faf9f6;
+            --accent: #c47a4a;
+            --accent-light: #e8c9b0;
+            --border: #e0dbd2;
+            --radius: 8px;
+        }
 
+        /* Навигация */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(250,249,246,0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border); padding: 0 16px;
+        }
+        .nav-inner {
+            max-width: 960px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; height: 60px;
+        }
+        .nav-logo {
+            font-family: 'Playfair Display', serif; font-size: 20px;
+            color: var(--warm-black); text-decoration: none; font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a {
+            color: var(--warm-gray); text-decoration: none; font-size: 11px;
+            letter-spacing: 2px; text-transform: uppercase; font-weight: 500; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .menu-toggle { display: none; background: none; border: none; color: var(--warm-black); font-size: 22px; cursor: pointer; }
+
+        /* Секции */
+        section { padding: 70px 16px; max-width: 900px; margin: 0 auto; }
+        .section-tag {
+            text-align: center; font-size: 9px; letter-spacing: 3px;
+            color: var(--accent); text-transform: uppercase; margin-bottom: 10px; font-weight: 600;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 36px);
+            color: var(--warm-black); text-align: center; margin-bottom: 10px; font-weight: 600;
+        }
+        .section-desc {
+            text-align: center; color: var(--warm-gray); max-width: 480px;
+            margin: 0 auto 40px; font-size: 13px; font-style: italic;
+        }
+        .divider { width: 50px; height: 1px; background: var(--accent); margin: 0 auto 35px; opacity: 0.6; }
+        .fade-up { opacity: 0; transform: translateY(25px); transition: 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Обложка */
+        .hero {
+            min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            position: relative;
+        }
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif; font-size: clamp(40px, 8vw, 72px);
+            color: #fff; font-weight: 600; letter-spacing: 1px; margin-bottom: 6px;
+        }
+        .hero-content h1 em { color: var(--accent-light); font-style: italic; }
+        .hero-subtitle { font-size: 12px; letter-spacing: 4px; color: #ddd; text-transform: uppercase; margin-bottom: 30px; }
+
+        /* Кнопка */
+        .btn-accent {
+            display: inline-block; background: transparent; border: 1.5px solid #fff; color: #fff;
+            padding: 12px 30px; text-decoration: none; font-size: 10px; letter-spacing: 3px;
+            text-transform: uppercase; transition: 0.3s; font-weight: 600;
+        }
+        .btn-accent:hover { background: #fff; color: var(--warm-black); }
+
+        /* О нас */
+        .about-text {
+            max-width: 600px; margin: 0 auto; text-align: center;
+            font-size: 14px; color: var(--warm-gray); line-height: 1.9;
+        }
+        .about-text .highlight {
+            font-family: 'Playfair Display', serif; font-size: 18px; color: var(--warm-black);
+            font-style: italic; margin: 16px 0;
+        }
+
+        /* Меню */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .menu-col { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+        .menu-col h3 {
+            font-family: 'Playfair Display', serif; font-size: 18px; color: var(--warm-black);
+            margin-bottom: 14px; text-align: center;
+        }
+        .menu-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dotted var(--border); font-size: 12px; }
+        .menu-item .name { color: var(--warm-black); }
+        .menu-item .price { color: var(--accent); font-weight: 600; }
+
+        /* Галерея */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+        .gallery-grid img {
+            width: 100%; height: 220px; object-fit: cover; border-radius: var(--radius);
+            transition: opacity 0.3s;
+        }
+        .gallery-grid img:hover { opacity: 0.85; }
+
+        /* Контакты */
+        .contact-row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; text-align: center; }
+        .contact-item { flex: 1 1 140px; }
+        .contact-item h4 { color: var(--accent); letter-spacing: 2px; font-size: 9px; text-transform: uppercase; margin-bottom: 6px; }
+        .contact-item p { font-size: 13px; color: var(--warm-black); font-weight: 500; }
+
+        footer {
+            text-align: center; padding: 30px 16px; color: var(--warm-gray);
+            font-size: 10px; letter-spacing: 1px; border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 600px) {
+            .nav-links { display: none; }
+            .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 60px; left: 0; width: 100%; background: #faf9f6; padding: 16px; gap: 12px; border-bottom: 1px solid var(--border); }
+            .menu-toggle { display: block; }
+            section { padding: 50px 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- НАВИГАЦИЯ -->
+<nav>
+    <div class="nav-inner">
+        <a href="#home" class="nav-logo">КлишеКофе</a>
+        <button class="menu-toggle" onclick="document.getElementById('navMenu').classList.toggle('open')">☰</button>
+        <ul class="nav-links" id="navMenu">
+            <li><a href="#about">О нас</a></li>
+            <li><a href="#menu">Меню</a></li>
+            <li><a href="#gallery">Фото</a></li>
+            <li><a href="#contacts">Контакты</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ОБЛОЖКА -->
+<section class="hero" id="home">
+    <div class="hero-content fade-up">
+        <h1>Клише<em>Кофе</em></h1>
+        <p class="hero-subtitle">Спешалти кофейня • Муром</p>
+        <a href="#menu" class="btn-accent">Смотреть меню</a>
+    </div>
+</section>
+
+<!-- О НАС -->
+<section id="about">
+    <p class="section-tag fade-up">Философия</p>
+    <h2 class="section-title fade-up">Кофе — это личное</h2>
+    <div class="divider fade-up"></div>
+    <div class="about-text fade-up">
+        <p>«КлишеКофе» — это не просто кофейня. Это место, где вкус становится воспоминанием. Мы варим кофе, который хочется пить медленно. Готовим еду, которую хочется попробовать ещё раз. И создаём атмосферу, в которую хочется вернуться.</p>
+        <p class="highlight">«В мире достаточно суеты. Здесь — пауза. Настоящая.»</p>
+        <p>Каждое зерно отобрано вручную. Каждый десерт — ручная работа. Каждая чашка — с вниманием к деталям. Мы за простоту, честность и вкус. Добро пожаловать.</p>
+    </div>
+</section>
+
+<!-- МЕНЮ -->
+<section id="menu">
+    <p class="section-tag fade-up">Меню</p>
+    <h2 class="section-title fade-up">Что мы готовим</h2>
+    <div class="divider fade-up"></div>
+    <div class="menu-grid fade-up">
+        <div class="menu-col">
+            <h3>☕ Кофе</h3>
+            <div class="menu-item"><span class="name">Эспрессо</span><span class="price">150 ₽</span></div>
+            <div class="menu-item"><span class="name">Американо</span><span class="price">170 ₽</span></div>
+            <div class="menu-item"><span class="name">Капучино</span><span class="price">210 ₽</span></div>
+            <div class="menu-item"><span class="name">Флэт уайт</span><span class="price">230 ₽</span></div>
+            <div class="menu-item"><span class="name">Фильтр-кофе</span><span class="price">200 ₽</span></div>
+            <div class="menu-item"><span class="name">Раф классический</span><span class="price">260 ₽</span></div>
+        </div>
+        <div class="menu-col">
+            <h3>🍳 Горячее</h3>
+            <div class="menu-item"><span class="name">Сырники со сметаной</span><span class="price">320 ₽</span></div>
+            <div class="menu-item"><span class="name">Скрэмбл с томатами</span><span class="price">280 ₽</span></div>
+            <div class="menu-item"><span class="name">Авокадо-тост с яйцом</span><span class="price">350 ₽</span></div>
+            <div class="menu-item"><span class="name">Суп дня</span><span class="price">290 ₽</span></div>
+            <div class="menu-item"><span class="name">Паста с грибами</span><span class="price">380 ₽</span></div>
+        </div>
+        <div class="menu-col">
+            <h3>🍰 Десерты</h3>
+            <div class="menu-item"><span class="name">Чизкейк</span><span class="price">290 ₽</span></div>
+            <div class="menu-item"><span class="name">Брауни</span><span class="price">240 ₽</span></div>
+            <div class="menu-item"><span class="name">Круассан миндальный</span><span class="price">200 ₽</span></div>
+            <div class="menu-item"><span class="name">Морковный торт</span><span class="price">270 ₽</span></div>
+            <div class="menu-item"><span class="name">Печенье с шоколадом</span><span class="price">120 ₽</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ФОТО -->
+<section id="gallery">
+    <p class="section-tag fade-up">Атмосфера</p>
+    <h2 class="section-title fade-up">Загляните к нам</h2>
+    <div class="divider fade-up"></div>
+    <div class="gallery-grid fade-up">
+        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=600&auto=format&fit=crop" alt="Интерьер" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=600&auto=format&fit=crop" alt="Кофе" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1551218372-a8789b81b253?q=80&w=600&auto=format&fit=crop" alt="Десерт" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?q=80&w=600&auto=format&fit=crop" alt="Завтрак" loading="lazy">
+    </div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section id="contacts">
+    <p class="section-tag fade-up">Контакты</p>
+    <h2 class="section-title fade-up">Приходите</h2>
+    <div class="divider fade-up"></div>
+    <div class="contact-row fade-up">
+        <div class="contact-item">
+            <h4>Адрес</h4>
+            <p>г. Муром<br>ул. Ленина, 12</p>
+        </div>
+        <div class="contact-item">
+            <h4>Часы</h4>
+            <p>Пн–Пт 08:00–21:00<br>Сб–Вс 09:00–22:00</p>
+        </div>
+        <div class="contact-item">
+            <h4>Телефон</h4>
+            <p>+7 (920) 123-45-67</p>
+        </div>
+        <div class="contact-item">
+            <h4>Соцсети</h4>
+            <p>Instagram • Telegram</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    © 2025 КлишеКофе • Спешалти кофейня • Муром • «Кофе — это личное»
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelector('.hero .fade-up')?.classList.add('visible');
+    document.querySelectorAll('#navMenu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('navMenu').classList.remove('open');
+        });
+    });
+</script>
+</body>
+</html>
