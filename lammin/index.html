@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Lammin | Инженерная сантехника оптом | Муром</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #ffffff;
+            font-family: 'Inter', sans-serif;
+            color: #1a1a1a;
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+        :root {
+            --blue: #1a73e8;
+            --blue-dark: #1557b0;
+            --blue-light: #e8f0fe;
+            --blue-bg: #f5f8fd;
+            --gray-light: #f1f3f4;
+            --gray: #5f6368;
+            --gray-dark: #202124;
+            --white: #ffffff;
+            --black: #111111;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow: 0 4px 24px rgba(0,0,0,0.06);
+            --border: #e0e0e0;
+            --radius: 10px;
+        }
+
+        /* Навигация */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(255,255,255,0.98); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-top {
+            max-width: 1300px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; height: 44px;
+            font-size: 11px; color: var(--gray); border-bottom: 1px solid var(--gray-light);
+            padding: 0 20px;
+        }
+        .nav-top-links { display: flex; gap: 16px; flex-wrap: wrap; }
+        .nav-top-links a { color: var(--gray); text-decoration: none; font-size: 11px; white-space: nowrap; }
+        .nav-top-links a:hover { color: var(--blue); }
+        .nav-main {
+            max-width: 1300px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; height: 64px;
+            padding: 0 20px;
+        }
+        .nav-logo { font-weight: 900; font-size: 24px; color: var(--black); text-decoration: none; letter-spacing: -1px; }
+        .nav-logo span { color: var(--blue); }
+        .nav-catalog { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+        .nav-catalog a {
+            color: var(--gray-dark); text-decoration: none; font-size: 12px;
+            font-weight: 600; transition: color 0.2s;
+        }
+        .nav-catalog a:hover { color: var(--blue); }
+        .nav-actions { display: flex; gap: 8px; align-items: center; }
+        .btn-outline-sm {
+            display: inline-block; border: 1.5px solid var(--blue); color: var(--blue);
+            padding: 7px 16px; text-decoration: none; font-size: 11px; font-weight: 600;
+            border-radius: 6px; transition: 0.25s; background: transparent;
+        }
+        .btn-outline-sm:hover { background: var(--blue); color: #fff; }
+        .menu-toggle { display: none; background: none; border: none; color: var(--blue); font-size: 26px; cursor: pointer; }
+
+        /* Секции */
+        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-tag {
+            font-size: 11px; letter-spacing: 3px; color: var(--blue);
+            text-transform: uppercase; margin-bottom: 10px; font-weight: 700;
+        }
+        .section-title {
+            font-size: clamp(28px, 4.5vw, 40px); color: var(--black);
+            margin-bottom: 14px; font-weight: 800; letter-spacing: -0.5px;
+        }
+        .section-desc {
+            color: var(--gray); font-size: 15px; margin-bottom: 40px; max-width: 650px;
+        }
+        .fade-up { opacity: 0; transform: translateY(30px); transition: 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Кнопки */
+        .btn-primary {
+            display: inline-block; background: var(--blue); color: #fff;
+            padding: 14px 32px; text-decoration: none; font-size: 13px; font-weight: 600;
+            border-radius: 8px; transition: 0.3s; border: none; cursor: pointer; letter-spacing: 0.3px;
+        }
+        .btn-primary:hover { background: var(--blue-dark); box-shadow: 0 8px 24px rgba(26,115,232,0.3); }
+        .btn-white {
+            display: inline-block; background: #fff; color: var(--blue);
+            padding: 14px 32px; text-decoration: none; font-size: 13px; font-weight: 600;
+            border-radius: 8px; transition: 0.3s; border: none; cursor: pointer; letter-spacing: 0.3px;
+        }
+        .btn-white:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+
+        /* Обложка */
+        .hero {
+            min-height: 85vh; display: flex; align-items: center;
+            background: linear-gradient(160deg, #f8faff 0%, #e8f0fe 40%, #ffffff 100%);
+            position: relative; overflow: hidden; padding: 120px 20px 80px;
+        }
+        .hero-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; align-items: center; }
+        .hero-text { flex: 1 1 400px; }
+        .hero-text h1 { font-size: clamp(34px, 6vw, 56px); font-weight: 900; letter-spacing: -1.5px; margin-bottom: 10px; }
+        .hero-text h1 span { color: var(--blue); }
+        .hero-text p { color: var(--gray); font-size: 16px; margin-bottom: 30px; max-width: 480px; }
+        .hero-stats { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 30px; }
+        .hero-stat .num { font-size: 36px; font-weight: 900; color: var(--blue); }
+        .hero-stat .label { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 2px; }
+        .hero-visual {
+            flex: 1 1 350px; min-height: 320px;
+            background: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
+            border-radius: 16px; box-shadow: var(--shadow);
+        }
+
+        /* Хлебные крошки */
+        .breadcrumbs { font-size: 12px; color: var(--gray); margin-bottom: 10px; }
+        .breadcrumbs a { color: var(--blue); text-decoration: none; }
+        .breadcrumbs a:hover { text-decoration: underline; }
+
+        /* О компании */
+        .about-grid { display: flex; flex-wrap: wrap; gap: 40px; align-items: start; }
+        .about-text { flex: 1 1 350px; }
+        .about-text p { margin-bottom: 16px; color: var(--gray-dark); font-size: 14px; }
+        .about-highlight {
+            background: var(--blue-bg); border-left: 3px solid var(--blue);
+            padding: 20px 24px; border-radius: 0 8px 8px 0; margin: 20px 0;
+        }
+        .about-highlight h4 { font-weight: 700; margin-bottom: 6px; color: var(--black); }
+        .about-highlight p { color: var(--gray); font-size: 13px; margin: 0; }
+
+        /* Таймлайн */
+        .timeline-section { background: var(--blue-bg); padding: 60px 20px; }
+        .timeline-inner { max-width: 900px; margin: 0 auto; }
+        .timeline { position: relative; }
+        .timeline::before {
+            content: ''; position: absolute; left: 18px; top: 0; bottom: 0;
+            width: 2px; background: var(--blue);
+        }
+        .tl-item { position: relative; padding-left: 50px; margin-bottom: 28px; }
+        .tl-item::before {
+            content: ''; position: absolute; left: 11px; top: 4px;
+            width: 16px; height: 16px; background: var(--blue); border-radius: 50%;
+            border: 3px solid #fff; box-shadow: 0 0 0 2px var(--blue);
+        }
+        .tl-year { font-weight: 800; color: var(--blue); font-size: 20px; }
+        .tl-text { color: var(--gray-dark); font-size: 14px; margin-top: 3px; }
+
+        /* Продукция */
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
+        .product-card {
+            background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 28px 18px; text-align: center; transition: 0.3s; text-decoration: none; color: inherit;
+        }
+        .product-card:hover { border-color: var(--blue); box-shadow: var(--shadow); transform: translateY(-3px); }
+        .product-icon { font-size: 38px; margin-bottom: 12px; }
+        .product-name { font-weight: 700; font-size: 15px; }
+
+        /* Форма */
+        .contact-form {
+            max-width: 520px; margin: 0 auto; background: #fff;
+            border: 1px solid var(--border); border-radius: 12px; padding: 30px; box-shadow: var(--shadow-sm);
+        }
+        .form-field { margin-bottom: 12px; }
+        .form-field label { display: block; font-size: 10px; letter-spacing: 2px; color: var(--gray); margin-bottom: 4px; text-transform: uppercase; font-weight: 700; }
+        .form-field input, .form-field textarea, .form-field select {
+            width: 100%; padding: 11px 14px; background: var(--gray-light); border: 1px solid var(--border);
+            border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--black);
+        }
+        .form-field textarea { height: 90px; resize: vertical; }
+        .btn-submit {
+            width: 100%; padding: 14px; background: var(--blue); border: none;
+            color: #fff; font-size: 13px; font-weight: 700; border-radius: 8px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .btn-submit:hover { background: var(--blue-dark); }
+
+        /* Контакты */
+        .contact-row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; text-align: center; }
+        .contact-item { flex: 1 1 150px; }
+        .contact-item h4 { color: var(--blue); letter-spacing: 2px; font-size: 10px; text-transform: uppercase; margin-bottom: 6px; }
+        .contact-item p { font-size: 14px; color: var(--gray-dark); }
+
+        /* Футер */
+        footer {
+            background: var(--gray-light); padding: 30px 20px; text-align: center;
+            color: var(--gray); font-size: 11px; border-top: 1px solid var(--border);
+        }
+        footer a { color: var(--blue); text-decoration: none; }
+        footer .footer-links { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 14px; }
+        footer .footer-links a { font-size: 12px; font-weight: 500; }
+
+        @media (max-width: 768px) {
+            .nav-top-links { display: none; }
+            .nav-catalog, .nav-actions { display: none; }
+            .nav-catalog.open, .nav-actions.open { display: flex; flex-direction: column; position: absolute; left: 0; width: 100%; background: #fff; padding: 16px 20px; gap: 12px; border-bottom: 1px solid var(--border); }
+            .nav-catalog.open { top: 108px; }
+            .nav-actions.open { top: 340px; padding-bottom: 20px; }
+            .menu-toggle { display: block; }
+            section { padding: 50px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- НАВИГАЦИЯ -->
+<nav>
+    <div class="nav-top">
+        <span>Офис в Муроме: Владимирское шоссе, 25А</span>
+        <div class="nav-top-links">
+            <a href="#about">О компании</a>
+            <a href="#">Новости</a>
+            <a href="#partner">Партнерам</a>
+            <a href="#support">Поддержка</a>
+            <a href="#support">Сервис</a>
+            <a href="#">Где купить</a>
+            <a href="#contacts">Контакты</a>
+        </div>
+    </div>
+    <div class="nav-main">
+        <a href="#home" class="nav-logo">LAM<span>MIN</span></a>
+        <button class="menu-toggle" onclick="document.getElementById('navCat').classList.toggle('open'); document.getElementById('navAct').classList.toggle('open');">☰</button>
+        <ul class="nav-catalog" id="navCat">
+            <li><a href="#products">Радиаторы</a></li>
+            <li><a href="#products">Трубы</a></li>
+            <li><a href="#products">Фитинги</a></li>
+            <li><a href="#products">Запорная арматура</a></li>
+            <li><a href="#products">Сварочное оборудование</a></li>
+        </ul>
+        <div class="nav-actions" id="navAct">
+            <a href="#" class="btn-outline-sm">Вход</a>
+            <a href="#" class="btn-outline-sm">Регистрация</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ОБЛОЖКА -->
+<section class="hero" id="home">
+    <div class="hero-inner">
+        <div class="hero-text fade-up">
+            <p class="breadcrumbs"><a href="#">Главная</a> • <a href="#about">О компании</a> • История и будущее</p>
+            <h1>30 лет <span>согреваем</span> вас</h1>
+            <p>Продукция Lammin — это уникальное и надёжное оборудование для систем отопления. Разрабатывается на основе современных технологий и производится на лучших заводах Восточной Азии и России.</p>
+            <a href="#contact" class="btn-primary">Задать вопрос</a>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="num">30+</div><div class="label">лет на рынке</div></div>
+                <div class="hero-stat"><div class="num">12</div><div class="label">стран</div></div>
+            </div>
+        </div>
+        <div class="hero-visual fade-up" title="Производство Lammin"></div>
+    </div>
+</section>
+
+<!-- О КОМПАНИИ -->
+<section id="about">
+    <p class="section-tag fade-up">Lammin • О компании</p>
+    <h2 class="section-title fade-up">История и будущее</h2>
+    <div class="about-grid fade-up">
+        <div class="about-text">
+            <p>Продукция под торговой маркой Lammin — это уникальное и надежное оборудование и аксессуары для систем отопления. Они разрабатываются на основе современных технологических решений и производятся на одних из лучших заводов Восточной Азии и России с использованием автоматизированных линий и литейных машин.</p>
+            <div class="about-highlight">
+                <h4>Уникальная продукция собственного производства</h4>
+                <p>Уникальность наших отопительных приборов, труб, запорной арматуры и аксессуаров заключается в нестандартном подходе ко всем аспектам производства, начиная с состава сплава заканчивая технологией покраски. Проведенные исследования и испытания показали надежность и прочность оборудования Lammin, высокое качество его исполнения и отличные эксплуатационные характеристики.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ТАЙМЛАЙН -->
+<div class="timeline-section">
+    <div class="timeline-inner">
+        <h2 class="section-title fade-up" style="text-align:center;">30 лет согреваем вас</h2>
+        <div class="timeline fade-up">
+            <div class="tl-item"><div class="tl-year">1989</div><div class="tl-text">Мы занимаемся теплом в Lammin с 1989 года. Изначально специализировались на комплексном конструировании систем водяного радиаторного отопления.</div></div>
+            <div class="tl-item"><div class="tl-year">1994</div><div class="tl-text">В течение первых 5 лет компания занималась проектированием, комплектацией и организацией монтажных работ на крупных инженерных объектах в Европе и Азии.</div></div>
+            <div class="tl-item"><div class="tl-year">2000</div><div class="tl-text">Накопленный опыт и возросшие финансовые возможности позволили компании инвестировать в производственные цеха и лаборатории для создания инженерного бюро. Специалисты бюро приняли участие в разработке отопительного оборудования для нескольких торговых марок премиум-сегмента.</div></div>
+            <div class="tl-item"><div class="tl-year">2017</div><div class="tl-text">Сейчас Lammin — это высокие технологии, направленные на разработку сложного оборудования, автоматических и полуавтоматических производственных линий и машин для разных сфер деятельности.</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- ПРОДУКЦИЯ -->
+<section id="products">
+    <p class="section-tag fade-up">Продукция</p>
+    <h2 class="section-title fade-up">Каталог Lammin</h2>
+    <div class="section-desc fade-up">Полипропиленовые трубы • Запорная арматура • Радиаторы отопления • Фитинги • Сварочное оборудование</div>
+    <div class="products-grid fade-up">
+        <a href="#" class="product-card"><div class="product-icon">🔧</div><div class="product-name">Радиаторы</div></a>
+        <a href="#" class="product-card"><div class="product-icon">🔩</div><div class="product-name">Трубы</div></a>
+        <a href="#" class="product-card"><div class="product-icon">⚙️</div><div class="product-name">Фитинги</div></a>
+        <a href="#" class="product-card"><div class="product-icon">🚰</div><div class="product-name">Запорная арматура</div></a>
+        <a href="#" class="product-card"><div class="product-icon">🔥</div><div class="product-name">Сварочное оборудование</div></a>
+    </div>
+</section>
+
+<!-- ПАРТНЁРАМ / ВОПРОСЫ -->
+<section id="partner" style="background: var(--blue-bg); max-width: 100%; padding: 60px 20px;">
+    <div style="max-width: 700px; margin: 0 auto; text-align: center;">
+        <p class="section-tag fade-up">Есть вопросы о продукции Lammin?</p>
+        <h2 class="section-title fade-up">Свяжитесь с нами</h2>
+        <p class="section-desc fade-up" style="margin-left: auto; margin-right: auto;">Чтобы приобрести инженерную сантехнику оптом или стать дилером Lammin, звоните!</p>
+        <p style="font-size: 28px; font-weight: 800; color: var(--blue); margin-bottom: 20px;" class="fade-up">+7 (800) 700-83-55</p>
+        <a href="#contact" class="btn-primary fade-up">Задать вопрос</a>
+    </div>
+</section>
+
+<!-- ПОДДЕРЖКА -->
+<section id="support">
+    <p class="section-tag fade-up">Поддержка • Сервис • Где купить</p>
+    <h2 class="section-title fade-up">Всегда на связи</h2>
+    <div class="section-desc fade-up">Техническая поддержка, консультации инженеров, гарантийное обслуживание, поиск дилеров</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;" class="fade-up">
+        <div style="flex: 1 1 200px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: center;">
+            <div style="font-size: 32px; margin-bottom: 8px;">📞</div>
+            <div style="font-weight: 700;">+7 (800) 700-83-55</div>
+            <div style="color: var(--gray); font-size: 12px;">Бесплатно по России</div>
+        </div>
+        <div style="flex: 1 1 200px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: center;">
+            <div style="font-size: 32px; margin-bottom: 8px;">📧</div>
+            <div style="font-weight: 700;">info@lammin.org</div>
+            <div style="color: var(--gray); font-size: 12px;">Ответ в течение 2 часов</div>
+        </div>
+        <div style="flex: 1 1 200px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: center;">
+            <div style="font-size: 32px; margin-bottom: 8px;">📍</div>
+            <div style="font-weight: 700;">Владимирское шоссе, 25А</div>
+            <div style="color: var(--gray); font-size: 12px;">Офис в Муроме</div>
+        </div>
+    </div>
+</section>
+
+<!-- ФОРМА -->
+<section id="contact">
+    <p class="section-tag fade-up">Задать вопрос</p>
+    <h2 class="section-title fade-up">Напишите нам</h2>
+    <div class="section-desc fade-up" style="text-align:center; margin-left:auto; margin-right:auto;">Готовы помочь вам. Напишите нам, если у вас появятся вопросы.</div>
+    <div class="contact-form fade-up">
+        <div class="form-field"><label>Ваше имя</label><input type="text" placeholder="Иван Петров"></div>
+        <div class="form-field"><label>Телефон или email</label><input type="text" placeholder="+7 920 123-45-67"></div>
+        <div class="form-field">
+            <label>Тема</label>
+            <select>
+                <option>Стать дилером</option>
+                <option>Оптовый заказ</option>
+                <option>Техническая поддержка</option>
+                <option>Сотрудничество</option>
+                <option>Другое</option>
+            </select>
+        </div>
+        <div class="form-field"><label>Сообщение</label><textarea placeholder="Опишите ваш вопрос..."></textarea></div>
+        <button class="btn-submit" onclick="alert('Спасибо! Ваше обращение принято. Мы свяжемся с вами.')">Отправить</button>
+    </div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section id="contacts">
+    <div class="contact-row fade-up">
+        <div class="contact-item"><h4>Адрес</h4><p>г. Муром<br>Владимирское шоссе, 25А</p></div>
+        <div class="contact-item"><h4>Телефон</h4><p>+7 (800) 700-83-55</p></div>
+        <div class="contact-item"><h4>Почта</h4><p>info@lammin.org</p></div>
+        <div class="contact-item"><h4>Соцсети</h4><p>Мы в социальных сетях</p></div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-links">
+        <a href="#products">Радиаторы</a>
+        <a href="#products">Трубы</a>
+        <a href="#products">Фитинги</a>
+        <a href="#products">Запорная арматура</a>
+        <a href="#products">Сварочное оборудование</a>
+        <a href="#about">О компании</a>
+        <a href="#">Новости</a>
+        <a href="#partner">Партнерам</a>
+        <a href="#support">Поддержка</a>
+        <a href="#support">Сервис</a>
+        <a href="#">Где купить</a>
+        <a href="#contacts">Контакты</a>
+    </div>
+    <p>ООО «ЛАММИН» • ИНН/КПП: 3334022400/333401001 • ОГРН: 1143334001470</p>
+    <p>2026 © Lammin – Инженерная сантехника оптом. Производство полипропиленовых труб и фитингов. Поставки радиаторов отопления, аксессуаров и запорной арматуры.</p>
+    <p style="margin-top: 10px;"><a href="#">Политика конфиденциальности</a> • <a href="#">Файлы cookie</a></p>
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelector('.hero .fade-up')?.classList.add('visible');
+</script>
+</body>
+</html>
