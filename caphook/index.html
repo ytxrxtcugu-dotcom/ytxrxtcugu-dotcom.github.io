@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Капитан Крюк | Пивной бар с 2001 года | Муром</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Oswald:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0c0b08;
+            font-family: 'Montserrat', sans-serif;
+            color: #c8c0b4;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        :root {
+            --gold: #b8935a;
+            --gold-light: #d4b87a;
+            --copper: #a0522d;
+            --wood-dark: #1e1810;
+            --wood-light: #2a2318;
+            --iron: #3a3330;
+            --stone: #6b5e53;
+            --cream: #e8dcca;
+            --dark-bg: #0c0b08;
+        }
+
+        /* Навигация */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(12,11,8,0.95); backdrop-filter: blur(12px);
+            border-bottom: 1px solid #1f1a12; padding: 0 20px;
+        }
+        .nav-inner {
+            max-width: 1200px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; height: 70px;
+        }
+        .nav-logo {
+            font-family: 'EB Garamond', serif; font-size: 26px; color: var(--gold-light);
+            text-decoration: none; font-weight: 600; letter-spacing: 2px;
+        }
+        .nav-logo span { font-size: 12px; display: block; letter-spacing: 4px; color: var(--stone); text-transform: uppercase; }
+        .nav-links { display: flex; gap: 22px; list-style: none; flex-wrap: wrap; justify-content: flex-end; }
+        .nav-links a {
+            color: #9a8e7e; text-decoration: none; font-size: 10px;
+            letter-spacing: 2.5px; text-transform: uppercase; font-weight: 500; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--gold-light); }
+        .menu-toggle { display: none; background: none; border: none; color: var(--gold); font-size: 26px; cursor: pointer; }
+
+        /* Секции */
+        section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+        .section-tag {
+            text-align: center; font-size: 10px; letter-spacing: 5px;
+            color: var(--copper); text-transform: uppercase; margin-bottom: 15px;
+        }
+        .section-title {
+            font-family: 'EB Garamond', serif; font-size: clamp(34px, 6vw, 52px);
+            color: var(--cream); text-align: center; margin-bottom: 20px; font-weight: 600;
+        }
+        .section-desc { text-align: center; color: #8a7b69; max-width: 600px; margin: 0 auto 45px; font-size: 14px; font-style: italic; }
+        .gold-divider { width: 90px; height: 2px; background: var(--gold); margin: 0 auto 40px; opacity: 0.7; }
+        .fade-up { opacity: 0; transform: translateY(30px); transition: 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Кнопки */
+        .btn-primary {
+            display: inline-block; border: 1.5px solid var(--gold); color: var(--gold-light);
+            padding: 15px 42px; text-decoration: none; font-size: 11px; letter-spacing: 4px;
+            text-transform: uppercase; transition: 0.4s; background: transparent; font-weight: 600;
+        }
+        .btn-primary:hover { background: var(--gold); color: #0c0b08; box-shadow: 0 0 30px rgba(184,147,90,0.5); }
+
+        /* Обложка */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1575444758702-4a6b9222336e?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            position: relative;
+        }
+        .hero-content h1 {
+            font-family: 'EB Garamond', serif; font-size: clamp(44px, 10vw, 90px);
+            color: var(--cream); letter-spacing: 4px; font-weight: 700; margin-bottom: 10px;
+        }
+        .hero-content h1 em { color: var(--gold-light); font-style: italic; }
+        .hero-since { font-size: 12px; letter-spacing: 6px; color: var(--stone); text-transform: uppercase; margin-bottom: 30px; }
+        .hero-quote { font-style: italic; color: #6b5e53; font-size: 15px; margin-bottom: 35px; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+        /* О баре + легенда */
+        .about-grid { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; }
+        .about-text { flex: 1 1 350px; }
+        .about-text h3 { font-family: 'EB Garamond', serif; font-size: 26px; color: var(--gold-light); margin-bottom: 15px; }
+        .about-text p { color: #9a8e7e; font-size: 14px; margin-bottom: 12px; }
+        .prison-badge {
+            display: inline-block; background: #1a1510; border: 1px solid #3a3024;
+            padding: 12px 20px; margin-top: 15px; font-style: italic; color: var(--stone);
+        }
+        .about-image {
+            flex: 1 1 350px; min-height: 380px;
+            background: url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
+            border: 1px solid #1f1a12;
+        }
+
+        /* Залы */
+        .halls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .hall-card {
+            background: var(--wood-dark); border: 1px solid #1f1a12;
+            padding: 35px 25px; text-align: center; transition: 0.3s;
+        }
+        .hall-card:hover { border-color: var(--gold); }
+        .hall-icon { font-size: 40px; margin-bottom: 15px; }
+        .hall-name { font-family: 'EB Garamond', serif; font-size: 24px; color: var(--cream); margin-bottom: 12px; }
+        .hall-desc { color: #8a7b69; font-size: 13px; }
+        .hall-items { list-style: none; margin-top: 15px; }
+        .hall-items li { padding: 6px 0; color: #6b5e53; font-size: 13px; border-bottom: 1px dotted #1f1a12; }
+
+        /* Меню */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .menu-col { background: var(--wood-dark); border: 1px solid #1f1a12; padding: 30px; }
+        .menu-col h3 { font-family: 'EB Garamond', serif; font-size: 22px; color: var(--gold-light); margin-bottom: 20px; text-align: center; }
+        .menu-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dotted #1f1a12; font-size: 13px; }
+        .menu-item .name { color: #c8c0b4; }
+        .menu-item .price { color: var(--gold); font-weight: 500; }
+
+        /* Бильярд */
+        .billiard-block { display: flex; flex-wrap: wrap; gap: 30px; align-items: center; }
+        .billiard-info { flex: 1 1 300px; }
+        .billiard-info h3 { font-family: 'EB Garamond', serif; font-size: 24px; color: var(--gold-light); margin-bottom: 12px; }
+        .billiard-info ul { list-style: none; }
+        .billiard-info ul li { padding: 8px 0; color: #9a8e7e; border-bottom: 1px dotted #1f1a12; font-size: 13px; }
+        .billiard-photo {
+            flex: 1 1 300px; min-height: 280px;
+            background: url('https://images.unsplash.com/photo-1550963295-019d8a8a0f2c?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
+            border: 1px solid #1f1a12;
+        }
+
+        /* Банкеты */
+        .banquet-cards { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; }
+        .banquet-card {
+            background: var(--wood-dark); border: 1px solid #1f1a12;
+            padding: 30px; flex: 1 1 250px; max-width: 350px; text-align: center; transition: 0.3s;
+        }
+        .banquet-card:hover { border-color: var(--gold); }
+        .banquet-card h4 { font-family: 'EB Garamond', serif; font-size: 20px; color: var(--cream); margin-bottom: 10px; }
+        .banquet-card .capacity { color: var(--gold); font-size: 28px; font-weight: 600; }
+        .banquet-card p { color: #8a7b69; font-size: 13px; margin-top: 8px; }
+
+        /* Доставка */
+        .delivery-block { text-align: center; background: var(--wood-dark); border: 1px solid #1f1a12; padding: 40px; max-width: 600px; margin: 0 auto; }
+        .delivery-block h3 { font-family: 'EB Garamond', serif; font-size: 24px; color: var(--gold-light); margin-bottom: 15px; }
+        .delivery-block p { color: #9a8e7e; font-size: 14px; margin-bottom: 8px; }
+
+        /* Форма брони */
+        .booking-form { max-width: 600px; margin: 0 auto; background: var(--wood-dark); border: 1px solid #1f1a12; padding: 35px; }
+        .form-row { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 14px; }
+        .form-field { flex: 1 1 200px; }
+        .form-field label { display: block; font-size: 9px; letter-spacing: 2px; color: var(--stone); margin-bottom: 6px; text-transform: uppercase; }
+        .form-field input, .form-field select {
+            width: 100%; padding: 12px 14px; background: #0c0b08; border: 1px solid #1f1a12;
+            color: #c8c0b4; font-family: 'Montserrat', sans-serif; font-size: 13px;
+        }
+        .btn-submit {
+            width: 100%; padding: 16px; background: transparent; border: 1.5px solid var(--gold);
+            color: var(--gold-light); font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+            cursor: pointer; transition: 0.4s; font-weight: 600; margin-top: 8px;
+        }
+        .btn-submit:hover { background: var(--gold); color: #0c0b08; }
+
+        /* Контакты */
+        .contact-row { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; text-align: center; }
+        .contact-item { flex: 1 1 160px; }
+        .contact-item h4 { color: var(--gold); letter-spacing: 3px; font-size: 10px; text-transform: uppercase; margin-bottom: 10px; }
+        .contact-item p { font-size: 14px; color: #9a8e7e; }
+
+        footer { text-align: center; padding: 30px; color: #3a3330; font-size: 10px; letter-spacing: 3px; border-top: 1px solid #1f1a12; margin-top: 30px; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: #0c0b08; padding: 20px; gap: 18px; border-bottom: 1px solid #1f1a12; }
+            .nav-links.open { display: flex; }
+            .menu-toggle { display: block; }
+            section { padding: 60px 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- НАВИГАЦИЯ -->
+<nav>
+    <div class="nav-inner">
+        <a href="#home" class="nav-logo">Капитан Крюк<span>Пивной бар • Муром</span></a>
+        <button class="menu-toggle" onclick="document.getElementById('navMenu').classList.toggle('open')">☰</button>
+        <ul class="nav-links" id="navMenu">
+            <li><a href="#about">История</a></li>
+            <li><a href="#halls">Залы</a></li>
+            <li><a href="#menu">Меню</a></li>
+            <li><a href="#billiard">Бильярд</a></li>
+            <li><a href="#banquets">Банкеты</a></li>
+            <li><a href="#delivery">Доставка</a></li>
+            <li><a href="#booking">Бронь</a></li>
+            <li><a href="#contacts">Контакты</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ОБЛОЖКА -->
+<section class="hero" id="home">
+    <div class="hero-content fade-up">
+        <p class="hero-since">Основан в 2001 году</p>
+        <h1>Капитан <em>Крюк</em></h1>
+        <p class="hero-quote">«Место с историей. Место с характером.»</p>
+        <a href="#booking" class="btn-primary">Забронировать стол</a>
+    </div>
+</section>
+
+<!-- ИСТОРИЯ -->
+<section id="about">
+    <p class="section-tag fade-up">С 2001 года</p>
+    <h2 class="section-title fade-up">Бар, где стены помнят</h2>
+    <div class="gold-divider fade-up"></div>
+    <div class="about-grid fade-up">
+        <div class="about-text">
+            <h3>Пивной бар с историей</h3>
+            <p>«Капитан Крюк» открылся в 2001 году в стенах бывшей городской тюрьмы. Массивные кирпичные своды, кованые решётки и арочные проёмы — всё это бережно сохранено и стало частью интерьера.</p>
+            <p>Сегодня здесь варят живое пиво, жарят мясо на открытом гриле и подают свежие суши. Атмосфера старой крепости, переосмысленная с уважением и вкусом.</p>
+            <div class="prison-badge">🏛️ Здание бывшей тюрьмы XIX века — охраняется государством</div>
+        </div>
+        <div class="about-image" title="Интерьер Капитана Крюка"></div>
+    </div>
+</section>
+
+<!-- ЗАЛЫ -->
+<section id="halls">
+    <p class="section-tag fade-up">Наши залы</p>
+    <h2 class="section-title fade-up">Три пространства — одна душа</h2>
+    <div class="gold-divider fade-up"></div>
+    <div class="halls-grid fade-up">
+        <div class="hall-card">
+            <div class="hall-icon">🍺</div>
+            <div class="hall-name">Пивной бар</div>
+            <p class="hall-desc">Живое нефильтрованное пиво, сваренное здесь же. 12 кранов, фирменные закуски, брутальный интерьер с кирпичной кладкой.</p>
+            <ul class="hall-items"><li>12 сортов разливного</li><li>Собственная пивоварня</li><li>Прямо из танка</li></ul>
+        </div>
+        <div class="hall-card">
+            <div class="hall-icon">🔥</div>
+            <div class="hall-name">Гриль-бар</div>
+            <p class="hall-desc">Открытая кухня, аромат дымка, мраморная говядина и рёбра томлёного копчения. Всё готовится при гостях.</p>
+            <ul class="hall-items"><li>Стейки • Рёбра • Крылья</li><li>Дровяной гриль</li><li>Соусы собственного приготовления</li></ul>
+        </div>
+        <div class="hall-card">
+            <div class="hall-icon">🍣</div>
+            <div class="hall-name">Суши-зал</div>
+            <p class="hall-desc">Неожиданный контраст: за коваными решётками — свежий лосось, тунец, угорь. Мастера из Японии, продукты из Владивостока.</p>
+            <ul class="hall-items"><li>Классика и фирменные роллы</li><li>Суши-бар на 10 мест</li><li>Доставка по городу</li></ul>
+        </div>
+    </div>
+</section>
+
+<!-- МЕНЮ -->
+<section id="menu">
+    <p class="section-tag fade-up">Меню</p>
+    <h2 class="section-title fade-up">Что попробовать</h2>
+    <div class="gold-divider fade-up"></div>
+    <div class="menu-grid fade-up">
+        <div class="menu-col">
+            <h3>🍺 Пиво</h3>
+            <div class="menu-item"><span class="name">«Капитанское» светлое</span><span class="price">280 ₽</span></div>
+            <div class="menu-item"><span class="name">«Трюмное» тёмное</span><span class="price">310 ₽</span></div>
+            <div class="menu-item"><span class="name">«Абордаж» IPA</span><span class="price">350 ₽</span></div>
+            <div class="menu-item"><span class="name">«Штормовое» стаут</span><span class="price">330 ₽</span></div>
+        </div>
+        <div class="menu-col">
+            <h3>🔥 Гриль</h3>
+            <div class="menu-item"><span class="name">Рибай (300 г)</span><span class="price">1850 ₽</span></div>
+            <div class="menu-item"><span class="name">Свиные рёбра BBQ</span><span class="price">790 ₽</span></div>
+            <div class="menu-item"><span class="name">Куриные крылья</span><span class="price">520 ₽</span></div>
+            <div class="menu-item"><span class="name">Бургер «Крюк»</span><span class="price">650 ₽</span></div>
+        </div>
+        <div class="menu-col">
+            <h3>🍣 Суши</h3>
+            <div class="menu-item"><span class="name">Филадельфия классик</span><span class="price">620 ₽</span></div>
+            <div class="menu-item"><span class="name">Калифорния с угрём</span><span class="price">580 ₽</span></div>
+            <div class="menu-item"><span class="name">Ролл «Капитан»</span><span class="price">690 ₽</span></div>
+            <div class="menu-item"><span class="name">Сашими (ассорти)</span><span class="price">1200 ₽</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- БИЛЬЯРД -->
+<section id="billiard">
+    <p class="section-tag fade-up">Бильярд</p>
+    <h2 class="section-title fade-up">Русский и американка</h2>
+    <div class="gold-divider fade-up"></div>
+    <div class="billiard-block fade-up">
+        <div class="billiard-info">
+            <h3>4 стола в отдельном зале</h3>
+            <ul>
+                <li>🎱 Русский бильярд — 2 стола (12 футов)</li>
+                <li>🥇 Американский пул — 2 стола (9 футов)</li>
+                <li>🕐 Аренда: от 400 ₽/час</li>
+                <li>🍺 Барное обслуживание прямо у стола</li>
+                <li>🏆 Регулярные турниры по выходным</li>
+            </ul>
+            <a href="#booking" class="btn-primary" style="margin-top:20px;">Забронировать стол</a>
+        </div>
+        <div class="billiard-photo" title="Бильярдный зал"></div>
+    </div>
+</section>
+
+<!-- БАНКЕТЫ -->
+<section id="banquets">
+    <p class="section-tag fade-up">Банкеты</p>
+    <h2 class="section-title fade-up">Залы для праздников</h2>
+    <div class="gold-divider fade-up"></div>
+    <p class="section-desc fade-up">Три банкетных зала в исторических интерьерах — от камерных встреч до больших торжеств</p>
+    <div class="banquet-cards fade-up">
+        <div class="banquet-card">
+            <h4>Малый зал</h4>
+            <div class="capacity">до 25</div>
+            <p>Уютное пространство с камином и кирпичными сводами. Идеально для дня рождения или семейного ужина.</p>
+        </div>
+        <div class="banquet-card">
+            <h4>Капитанский зал</h4>
+            <div class="capacity">до 50</div>
+            <p>Центральный зал с панорамными окнами, сценой и собственным баром. Юбилеи, свадьбы, корпоративы.</p>
+        </div>
+        <div class="banquet-card">
+            <h4>Камера</h4>
+            <div class="capacity">до 15</div>
+            <p>Атмосферный VIP-зал в бывшей тюремной камере. Кованые решётки, свечи, полная приватность.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ДОСТАВКА -->
+<section id="delivery">
+    <p class="section-tag fade-up">Доставка</p>
+    <h2 class="section-title fade-up">Капитан Крюк — на дом</h2>
+    <div class="gold-divider fade-up"></div>
+    <div class="delivery-block fade-up">
+        <h3>Бесплатная доставка по Мурому</h3>
+        <p>🍺 Пиво в кегах и бутылках</p>
+        <p>🔥 Гриль-меню в термоупаковке</p>
+        <p>🍣 Суши и роллы</p>
+        <p style="margin-top:15px; color:var(--gold);">Минимальный заказ: 800 ₽</p>
+        <p style="color:var(--stone);">Время доставки: 45–60 минут</p>
+        <p style="font-size:20px; color:var(--cream); margin-top:10px;">📞 +7 (920) 123-45-67</p>
+    </div>
+</section>
+
+<!-- БРОНЬ -->
+<section id="booking">
+    <p class="section-tag fade-up">Бронь</p>
+    <h2 class="section-title fade-up">Зарезервировать</h2>
+    <div class="gold-divider fade-up"></div>
+    <div class="booking-form fade-up">
+        <div class="form-row">
+            <div class="form-field"><label>Имя</label><input type="text" placeholder="Ваше имя"></div>
+            <div class="form-field"><label>Телефон</label><input type="tel" placeholder="+7 920 123-45-67"></div>
+        </div>
+        <div class="form-row">
+            <div class="form-field">
+                <label>Что бронируем?</label>
+                <select>
+                    <option>Столик в пивном баре</option>
+                    <option>Столик в гриль-баре</option>
+                    <option>Суши-бар</option>
+                    <option>Бильярдный стол</option>
+                    <option>Банкетный зал</option>
+                </select>
+            </div>
+            <div class="form-field"><label>Дата</label><input type="date"></div>
+        </div>
+        <div class="form-row">
+            <div class="form-field"><label>Гостей</label><input type="number" min="1" placeholder="2"></div>
+            <div class="form-field"><label>Время</label><input type="time" value="19:00"></div>
+        </div>
+        <button class="btn-submit" onclick="alert('Спасибо! Ваша заявка принята. Мы подтвердим бронь в течение 15 минут.')">Отправить заявку</button>
+    </div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section id="contacts">
+    <p class="section-tag fade-up">Контакты</p>
+    <h2 class="section-title fade-up">Где нас найти</h2>
+    <div class="gold-divider fade-up"></div>
+    <div class="contact-row fade-up">
+        <div class="contact-item"><h4>Адрес</h4><p>г. Муром<br>ул. Советская, 15<br>(здание бывшей тюрьмы)</p></div>
+        <div class="contact-item"><h4>Телефон</h4><p>+7 (920) 123-45-67</p></div>
+        <div class="contact-item"><h4>Режим</h4><p>Вс–Чт 14:00–00:00<br>Пт–Сб 14:00–03:00</p></div>
+        <div class="contact-item"><h4>Соцсети</h4><p>VK / Telegram</p></div>
+    </div>
+</section>
+
+<footer>© 2025 Капитан Крюк. Пивной бар с 2001 года. Муром. Здание бывшей тюрьмы.</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelector('.hero .fade-up')?.classList.add('visible');
+    document.querySelectorAll('#navMenu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('navMenu').classList.remove('open');
+        });
+    });
+</script>
+</body>
+</html>
