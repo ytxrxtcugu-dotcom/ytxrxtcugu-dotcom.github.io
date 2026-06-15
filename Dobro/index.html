@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Добро | Кофейня | Муром</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.65;
+            overflow-x: hidden;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        /* Светлая тема (по умолчанию) */
+        [data-theme="light"] {
+            --bg: #fefcf8;
+            --bg-card: #ffffff;
+            --bg-nav: rgba(254,252,248,0.96);
+            --bg-warm: #fff8f0;
+            --text: #2b241a;
+            --text-secondary: #8a7b6b;
+            --border: #e8e0d5;
+            --accent: #f47835;
+            --accent-light: #ffe8d6;
+            --accent-hover: #e06522;
+            --shadow: 0 4px 24px rgba(0,0,0,0.04);
+            --star: #f5a623;
+            --footer-border: #e8e0d5;
+        }
+
+        /* Тёмная тема */
+        [data-theme="dark"] {
+            --bg: #1a1815;
+            --bg-card: #24211c;
+            --bg-nav: rgba(26,24,21,0.96);
+            --bg-warm: #2a231a;
+            --text: #e8e0d5;
+            --text-secondary: #9a8e7e;
+            --border: #3a332a;
+            --accent: #f47835;
+            --accent-light: #3a2a1a;
+            --accent-hover: #f59055;
+            --shadow: 0 4px 24px rgba(0,0,0,0.2);
+            --star: #f5a623;
+            --footer-border: #3a332a;
+        }
+
+        body { background: var(--bg); color: var(--text); }
+
+        /* Навигация */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: var(--bg-nav); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border); padding: 0 16px;
+        }
+        .nav-inner {
+            max-width: 1000px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; height: 60px; gap: 12px;
+        }
+        .nav-logo {
+            font-family: 'Playfair Display', serif; font-size: 24px;
+            color: var(--text); text-decoration: none; font-weight: 700;
+        }
+        .nav-logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 14px; list-style: none; flex-wrap: wrap; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none; font-size: 11px;
+            letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .theme-toggle {
+            background: none; border: 1px solid var(--border); color: var(--text);
+            width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 16px;
+            transition: 0.3s; display: flex; align-items: center; justify-content: center;
+        }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+        .menu-toggle { display: none; background: none; border: none; color: var(--text); font-size: 24px; cursor: pointer; }
+
+        /* Секции */
+        section { padding: 70px 16px; max-width: 960px; margin: 0 auto; }
+        .section-tag {
+            font-size: 10px; letter-spacing: 3px; color: var(--accent);
+            text-transform: uppercase; margin-bottom: 8px; font-weight: 600; text-align: center;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 40px);
+            color: var(--text); text-align: center; margin-bottom: 10px; font-weight: 600;
+        }
+        .section-desc {
+            text-align: center; color: var(--text-secondary); max-width: 500px;
+            margin: 0 auto 35px; font-size: 14px; font-style: italic;
+        }
+        .divider { width: 60px; height: 2px; background: var(--accent); margin: 0 auto 35px; opacity: 0.6; }
+        .fade-up { opacity: 0; transform: translateY(25px); transition: 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Кнопки */
+        .btn-accent {
+            display: inline-block; background: var(--accent); color: #fff;
+            padding: 13px 30px; text-decoration: none; font-size: 12px; font-weight: 600;
+            border-radius: 8px; transition: 0.3s; border: none; cursor: pointer; letter-spacing: 1px;
+        }
+        .btn-accent:hover { background: var(--accent-hover); box-shadow: 0 8px 24px rgba(244,120,53,0.3); }
+
+        /* Обложка */
+        .hero {
+            min-height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            background: linear-gradient(160deg, var(--bg-warm) 0%, var(--bg) 100%);
+            position: relative; overflow: hidden; padding: 100px 16px 60px;
+        }
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif; font-size: clamp(44px, 10vw, 80px);
+            color: var(--text); font-weight: 700; letter-spacing: -1px; margin-bottom: 6px;
+        }
+        .hero-content h1 em { color: var(--accent); font-style: italic; }
+        .hero-subtitle { font-size: 13px; letter-spacing: 4px; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 30px; }
+        .hero-address { font-size: 12px; color: var(--text-secondary); margin-top: 16px; }
+
+        /* Новости */
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .news-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 20px; transition: 0.3s;
+        }
+        .news-card:hover { border-color: var(--accent); }
+        .news-date { font-size: 10px; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+        .news-text { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+        .news-more { color: var(--accent); font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 8px; display: inline-block; }
+
+        /* Меню */
+        .menu-filters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 30px; }
+        .filter-btn {
+            padding: 9px 20px; border: 1px solid var(--border); background: var(--bg-card);
+            border-radius: 25px; font-size: 12px; cursor: pointer; transition: 0.3s;
+            font-family: 'Inter', sans-serif; color: var(--text); font-weight: 500;
+        }
+        .filter-btn.active, .filter-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+        .menu-item {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 16px; display: flex; gap: 14px; align-items: start; transition: 0.3s;
+        }
+        .menu-item:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+        .menu-photo {
+            width: 70px; height: 70px; min-width: 70px; border-radius: 10px;
+            background: var(--accent-light); display: flex; align-items: center;
+            justify-content: center; font-size: 24px;
+        }
+        .menu-info h4 { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+        .menu-info .desc { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; line-height: 1.5; }
+        .menu-info .volume { font-size: 10px; color: var(--text-secondary); }
+        .menu-price { font-weight: 700; font-size: 16px; color: var(--accent); margin-left: auto; white-space: nowrap; align-self: center; }
+
+        /* Галерея */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+        .gallery-slot {
+            aspect-ratio: 1 / 1; background: var(--bg-card); border: 2px dashed var(--border);
+            border-radius: 12px; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; color: var(--text-secondary); font-size: 11px; gap: 6px;
+            transition: 0.3s;
+        }
+        .gallery-slot:hover { border-color: var(--accent); color: var(--accent); }
+        .gallery-slot .icon { font-size: 26px; opacity: 0.5; }
+
+        /* Контакты */
+        .contact-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; text-align: center; }
+        .contact-card {
+            flex: 1 1 160px; background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px;
+        }
+        .contact-card h4 { color: var(--accent); letter-spacing: 2px; font-size: 10px; text-transform: uppercase; margin-bottom: 6px; }
+        .contact-card p { font-size: 13px; font-weight: 600; }
+
+        footer { text-align: center; padding: 30px; color: var(--text-secondary); font-size: 11px; border-top: 1px solid var(--footer-border); margin-top: 20px; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 60px; left: 0; width: 100%; background: var(--bg); padding: 16px; gap: 12px; border-bottom: 1px solid var(--border); }
+            .menu-toggle { display: block; }
+            section { padding: 50px 14px; }
+            .menu-item { flex-wrap: wrap; }
+            .menu-price { margin-left: 0; width: 100%; text-align: right; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- НАВИГАЦИЯ -->
+<nav>
+    <div class="nav-inner">
+        <a href="#home" class="nav-logo">Д<span>О</span>БРО</a>
+        <button class="menu-toggle" onclick="document.getElementById('navMenu').classList.toggle('open')">☰</button>
+        <ul class="nav-links" id="navMenu">
+            <li><a href="#news">Новости</a></li>
+            <li><a href="#menu">Меню</a></li>
+            <li><a href="#gallery">Атмосфера</a></li>
+            <li><a href="#contacts">Контакты</a></li>
+        </ul>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Сменить тему" id="themeBtn">🌙</button>
+    </div>
+</nav>
+
+<!-- ОБЛОЖКА -->
+<section class="hero" id="home">
+    <div class="hero-content fade-up">
+        <h1>Д<em>О</em>БРО</h1>
+        <p class="hero-subtitle">Кофейня • Муром</p>
+        <a href="#menu" class="btn-accent">Смотреть меню</a>
+        <p class="hero-address">Московская улица, 9 • Выбираю добро</p>
+    </div>
+</section>
+
+<!-- НОВОСТИ -->
+<section id="news">
+    <p class="section-tag fade-up">Новости</p>
+    <h2 class="section-title fade-up">Добрые истории</h2>
+    <div class="divider fade-up"></div>
+    <div class="news-grid fade-up">
+        <div class="news-card">
+            <div class="news-date">12 мая</div>
+            <div class="news-text">Дарить уют, тепло, комфорт и радость — это часть миссии нашей кофейни. Но иногда нам дарят тепло. Вот такие открытки ручной работы мы получили в подарок. Моему восхищению нет предела — это потрясающе. Я благодарю гостей, которые ценят наш труд и поддерживают нас. До встречи!</div>
+        </div>
+        <div class="news-card">
+            <div class="news-date">9 декабря 2025</div>
+            <div class="news-text">Что создает настроение? Конечно же атмосфера уюта и любви и конечно вкусная еда. Мы готовим потрясающую кашу — нежную и супер вкусную. Более полезной и сытной еды не найти.</div>
+        </div>
+        <div class="news-card">
+            <div class="news-date">3 апреля 2025</div>
+            <div class="news-text">Ресурс? А что это такое? В нашей кофейне есть уникальные «кофейные чашки» — решебник для твоих задач! Мы дарим нашим гостям магию доброго утра, бодрость тела и определенность в жизни. Пользуйся. Эта роскошь есть только у нас!</div>
+            <span class="news-more">Читать далее</span>
+        </div>
+        <div class="news-card">
+            <div class="news-date">1 апреля 2025</div>
+            <div class="news-text">Часто вижу картину, когда гости пьют кофе с телефоном. Это грусть конечно. Можно пить кофе со своими мыслями, со своей радостью или своими друзьями. Есть еще классный вариант — пить кофе с книгой. Кофе и «Кофейные истории» — проведи время в блаженстве.</div>
+            <span class="news-more">Читать далее</span>
+        </div>
+    </div>
+</section>
+
+<!-- МЕНЮ -->
+<section id="menu">
+    <p class="section-tag fade-up">Меню</p>
+    <h2 class="section-title fade-up">Что мы готовим</h2>
+    <div class="menu-filters fade-up">
+        <button class="filter-btn active" onclick="filterMenu('all', this)">Все</button>
+        <button class="filter-btn" onclick="filterMenu('coffee', this)">☕ Кофе</button>
+        <button class="filter-btn" onclick="filterMenu('dessert', this)">🍰 Десерт</button>
+        <button class="filter-btn" onclick="filterMenu('tea', this)">🍵 Чай</button>
+        <button class="filter-btn" onclick="filterMenu('breakfast', this)">🥣 Завтрак</button>
+    </div>
+    <div class="menu-grid fade-up" id="menuGrid">
+        <!-- Кофе -->
+        <div class="menu-item" data-category="coffee">
+            <div class="menu-photo">☕</div>
+            <div class="menu-info"><h4>Кофе Орео</h4><p class="desc">Восхитительный десертный кофе с печеньем Орео и сливками.</p><span class="volume">350 мл</span></div>
+            <div class="menu-price">390 ₽</div>
+        </div>
+        <div class="menu-item" data-category="coffee">
+            <div class="menu-photo">🍋</div>
+            <div class="menu-info"><h4>Бамбл</h4><p class="desc">Бодрящий, холодный, цитрусовый кофе — это кайф.</p><span class="volume">350 мл</span></div>
+            <div class="menu-price">370 ₽</div>
+        </div>
+        <div class="menu-item" data-category="coffee">
+            <div class="menu-photo">🫗</div>
+            <div class="menu-info"><h4>Hario V60 (воронка)</h4><p class="desc">Неустаревающая альтернатива — для знатоков.</p><span class="volume">350 мл</span></div>
+            <div class="menu-price">390 ₽</div>
+        </div>
+        <div class="menu-item" data-category="coffee">
+            <div class="menu-photo">🧊</div>
+            <div class="menu-info"><h4>Ice-latte</h4><p class="desc">Кофейная классика — наслаждение в каждом глотке.</p><span class="volume">350 мл</span></div>
+            <div class="menu-price">300 ₽</div>
+        </div>
+        <div class="menu-item" data-category="coffee">
+            <div class="menu-photo">🥤</div>
+            <div class="menu-info"><h4>Фраппучино</h4><p class="desc">Прохлада и бодрость в классическом фраппучино.</p><span class="volume">350 мл</span></div>
+            <div class="menu-price">350 ₽</div>
+        </div>
+        <!-- Десерты -->
+        <div class="menu-item" data-category="dessert">
+            <div class="menu-photo">🍫</div>
+            <div class="menu-info"><h4>Горячий шоколад с маршмеллоу</h4><p class="desc">Роскошный, густой, сладкий, восхитительный...</p><span class="volume">150 мл</span></div>
+            <div class="menu-price">300 ₽</div>
+        </div>
+        <div class="menu-item" data-category="dessert">
+            <div class="menu-photo">🍦</div>
+            <div class="menu-info"><h4>Мороженое</h4><p class="desc">Мороженое — любимый десерт для всех возрастов.</p><span class="volume">100 г</span></div>
+            <div class="menu-price">250 ₽</div>
+        </div>
+        <div class="menu-item" data-category="dessert">
+            <div class="menu-photo">🫧</div>
+            <div class="menu-info"><h4>Молочный коктейль Бабл-гам</h4><p class="desc">Этот молочный коктейль вернет тебя в детство.</p><span class="volume">350 мл</span></div>
+            <div class="menu-price">370 ₽</div>
+        </div>
+        <div class="menu-item" data-category="dessert">
+            <div class="menu-photo">🥛</div>
+            <div class="menu-info"><h4>Молочный коктейль</h4><p class="desc">Классический молочный коктейль.</p><span class="volume">400 мл</span></div>
+            <div class="menu-price">350 ₽</div>
+        </div>
+        <!-- Чай -->
+        <div class="menu-item" data-category="tea">
+            <div class="menu-photo">🍵</div>
+            <div class="menu-info"><h4>Чай</h4><p class="desc">Ароматный классический чай.</p><span class="volume">400 мл</span></div>
+            <div class="menu-price">220 ₽</div>
+        </div>
+        <div class="menu-item" data-category="tea">
+            <div class="menu-photo">🫖</div>
+            <div class="menu-info"><h4>Чай</h4><p class="desc">Ароматный классический чай.</p><span class="volume">600 мл</span></div>
+            <div class="menu-price">270 ₽</div>
+        </div>
+        <div class="menu-item" data-category="tea">
+            <div class="menu-photo">🍊</div>
+            <div class="menu-info"><h4>Чай авторский</h4><p class="desc">Потрясающий вкус ягод или облепихи, а может апельсина (на ваш выбор) подарит радость жизни и наслаждение.</p><span class="volume">600 мл</span></div>
+            <div class="menu-price">490 ₽</div>
+        </div>
+        <!-- Завтрак -->
+        <div class="menu-item" data-category="breakfast">
+            <div class="menu-photo">🫐</div>
+            <div class="menu-info"><h4>Раф-каша ягодная</h4><p class="desc">Воздушная злаковая каша с ягодами — прекрасный завтрак. Подходит для вегетарианцев и тех, кто на ПП.</p><span class="volume">200 г</span></div>
+            <div class="menu-price">350 ₽</div>
+        </div>
+        <div class="menu-item" data-category="breakfast">
+            <div class="menu-photo">🍫🍊</div>
+            <div class="menu-info"><h4>Раф-каша шоколадно-апельсиновая</h4><p class="desc">Роскошный завтрак для вегетарианцев и тех, кто на ПП.</p><span class="volume">200 г</span></div>
+            <div class="menu-price">350 ₽</div>
+        </div>
+    </div>
+</section>
+
+<!-- ГАЛЕРЕЯ -->
+<section id="gallery">
+    <p class="section-tag fade-up">Атмосфера</p>
+    <h2 class="section-title fade-up">Загляните к нам</h2>
+    <p class="section-desc fade-up">Здесь будут ваши фотографии</p>
+    <div class="gallery-grid fade-up">
+        <div class="gallery-slot"><span class="icon">📸</span><span>Интерьер</span></div>
+        <div class="gallery-slot"><span class="icon">📸</span><span>Кофе</span></div>
+        <div class="gallery-slot"><span class="icon">📸</span><span>Десерты</span></div>
+        <div class="gallery-slot"><span class="icon">📸</span><span>Завтраки</span></div>
+        <div class="gallery-slot"><span class="icon">📸</span><span>Гости</span></div>
+        <div class="gallery-slot"><span class="icon">📸</span><span>Уголок</span></div>
+    </div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section id="contacts">
+    <p class="section-tag fade-up">Контакты</p>
+    <h2 class="section-title fade-up">Приходите за добром</h2>
+    <div class="contact-row fade-up">
+        <div class="contact-card"><h4>Адрес</h4><p>г. Муром<br>Московская улица, 9</p></div>
+        <div class="contact-card"><h4>Режим</h4><p>Ежедневно<br>08:00 – 21:00</p></div>
+        <div class="contact-card"><h4>Телефон</h4><p>+7 (920) 000-00-00</p></div>
+        <div class="contact-card"><h4>Соцсети</h4><p>VK • Telegram</p></div>
+    </div>
+</section>
+
+<footer>
+    © 2025 ДОБРО • Кофейня • Муром, Московская ул., 9 • Выбираю добро
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelector('.hero .fade-up')?.classList.add('visible');
+
+    document.querySelectorAll('#navMenu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('navMenu').classList.remove('open');
+        });
+    });
+
+    function filterMenu(category, btn) {
+        document.querySelectorAll('#menu .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('#menuGrid .menu-item').forEach(item => {
+            item.style.display = (category === 'all' || item.dataset.category === category) ? 'flex' : 'none';
+        });
+    }
+
+    function toggleTheme() {
+        const html = document.documentElement;
+        const btn = document.getElementById('themeBtn');
+        if (html.getAttribute('data-theme') === 'light') {
+            html.setAttribute('data-theme', 'dark');
+            btn.textContent = '☀️';
+            localStorage.setItem('dobro-theme', 'dark');
+        } else {
+            html.setAttribute('data-theme', 'light');
+            btn.textContent = '🌙';
+            localStorage.setItem('dobro-theme', 'light');
+        }
+    }
+
+    (function() {
+        const saved = localStorage.getItem('dobro-theme');
+        if (saved === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('themeBtn').textContent = '☀️';
+        }
+    })();
+</script>
+</body>
+</html>
