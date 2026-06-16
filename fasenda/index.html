@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Фазенда A-frame | Глэмпинг | Муром</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.65;
+            overflow-x: hidden;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        [data-theme="light"] {
+            --bg: #f9f7f4;
+            --bg-card: #ffffff;
+            --bg-nav: rgba(249,247,244,0.95);
+            --bg-green: #f2f5f0;
+            --text: #1a1a1a;
+            --text-secondary: #6b6560;
+            --border: #e0dbd3;
+            --accent: #5a7d4a;
+            --accent-light: #e8f0e2;
+            --accent-hover: #4a6b3c;
+            --gold: #b8944b;
+            --shadow: 0 4px 30px rgba(0,0,0,0.05);
+            --star: #f5a623;
+            --footer-border: #e0dbd3;
+        }
+
+        [data-theme="dark"] {
+            --bg: #1a1815;
+            --bg-card: #24211c;
+            --bg-nav: rgba(26,24,21,0.95);
+            --bg-green: #1e221a;
+            --text: #e8e0d5;
+            --text-secondary: #9a8e7e;
+            --border: #3a332a;
+            --accent: #7a9a62;
+            --accent-light: #2a3022;
+            --accent-hover: #8db070;
+            --gold: #c5a34b;
+            --shadow: 0 4px 30px rgba(0,0,0,0.2);
+            --star: #f5a623;
+            --footer-border: #3a332a;
+        }
+
+        body { background: var(--bg); color: var(--text); }
+
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: var(--bg-nav); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border); padding: 0 16px;
+        }
+        .nav-inner {
+            max-width: 1100px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; height: 60px; gap: 12px;
+        }
+        .nav-logo {
+            font-family: 'Playfair Display', serif; font-size: 22px;
+            color: var(--text); text-decoration: none; font-weight: 700; letter-spacing: -0.5px;
+        }
+        .nav-logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 14px; list-style: none; flex-wrap: wrap; }
+        .nav-links a {
+            color: var(--text-secondary); text-decoration: none; font-size: 11px;
+            letter-spacing: 2px; text-transform: uppercase; font-weight: 500; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-actions { display: flex; gap: 8px; align-items: center; }
+        .theme-toggle {
+            background: none; border: 1px solid var(--border); color: var(--text);
+            width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 16px;
+            transition: 0.3s; display: flex; align-items: center; justify-content: center;
+        }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+        .menu-toggle { display: none; background: none; border: none; color: var(--text); font-size: 24px; cursor: pointer; }
+
+        section { padding: 70px 16px; max-width: 1100px; margin: 0 auto; }
+        .section-tag {
+            font-size: 10px; letter-spacing: 4px; color: var(--accent);
+            text-transform: uppercase; margin-bottom: 8px; font-weight: 600; text-align: center;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 42px);
+            color: var(--text); text-align: center; margin-bottom: 10px; font-weight: 600;
+        }
+        .section-desc {
+            text-align: center; color: var(--text-secondary); max-width: 550px;
+            margin: 0 auto 35px; font-size: 14px; font-style: italic;
+        }
+        .divider { width: 60px; height: 2px; background: var(--accent); margin: 0 auto 35px; opacity: 0.6; }
+        .fade-up { opacity: 0; transform: translateY(25px); transition: 0.7s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        .btn-accent {
+            display: inline-block; background: var(--accent); color: #fff;
+            padding: 14px 34px; text-decoration: none; font-size: 12px; font-weight: 600;
+            border-radius: 8px; transition: 0.3s; border: none; cursor: pointer; letter-spacing: 2px; text-transform: uppercase;
+        }
+        .btn-accent:hover { background: var(--accent-hover); box-shadow: 0 8px 28px rgba(90,125,74,0.3); }
+        .btn-outline {
+            display: inline-block; border: 2px solid var(--accent); color: var(--accent);
+            padding: 14px 34px; text-decoration: none; font-size: 12px; font-weight: 600;
+            border-radius: 8px; transition: 0.3s; background: transparent; letter-spacing: 2px; text-transform: uppercase;
+        }
+        .btn-outline:hover { background: var(--accent); color: #fff; }
+
+        .hero {
+            min-height: 90vh; display: flex; align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1587061949409-02df41d5e562?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            position: relative; padding: 100px 16px 60px;
+        }
+        .hero-content { max-width: 600px; }
+        .hero-badge {
+            display: inline-block; background: var(--accent); color: #fff;
+            padding: 6px 16px; font-size: 10px; letter-spacing: 3px; font-weight: 700;
+            text-transform: uppercase; border-radius: 20px; margin-bottom: 16px;
+        }
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif; font-size: clamp(38px, 8vw, 68px);
+            color: #fff; font-weight: 700; letter-spacing: -1px; margin-bottom: 8px; line-height: 1.1;
+        }
+        .hero-content h1 em { color: #c5d8b5; font-style: italic; }
+        .hero-subtitle { font-size: 14px; letter-spacing: 3px; color: #ddd; text-transform: uppercase; margin-bottom: 24px; }
+        .hero-features { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+        .hero-features span {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+            padding: 6px 14px; border-radius: 20px; font-size: 11px; color: #fff;
+        }
+
+        .rating-big { text-align: center; margin-bottom: 30px; }
+        .rating-big .num { font-size: 48px; font-weight: 800; color: var(--accent); }
+        .rating-big .stars { color: var(--star); font-size: 16px; }
+        .rating-big .label { font-size: 12px; color: var(--text-secondary); }
+
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+        .gallery-grid img {
+            width: 100%; height: 220px; object-fit: cover; border-radius: 12px;
+            transition: transform 0.3s;
+        }
+        .gallery-grid img:hover { transform: scale(1.02); }
+
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+        .feature-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 24px; text-align: center; transition: 0.3s;
+        }
+        .feature-card:hover { border-color: var(--accent); }
+        .feature-icon { font-size: 32px; margin-bottom: 10px; }
+        .feature-card h4 { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+        .feature-card p { font-size: 11px; color: var(--text-secondary); }
+
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .review-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 20px;
+        }
+        .review-stars { color: var(--star); font-size: 13px; margin-bottom: 4px; }
+        .review-name { font-weight: 700; font-size: 13px; margin-bottom: 2px; }
+        .review-date { font-size: 10px; color: var(--text-secondary); margin-bottom: 8px; }
+        .review-text { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+        .award-card {
+            background: var(--bg-card); border: 2px solid var(--gold); border-radius: 12px;
+            padding: 20px 24px; display: inline-flex; align-items: center; gap: 14px;
+            margin: 0 auto; text-align: left;
+        }
+        .award-icon { font-size: 32px; }
+        .award-info h4 { font-size: 14px; font-weight: 700; color: var(--gold); }
+        .award-info p { font-size: 11px; color: var(--text-secondary); }
+
+        .map-container {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+            height: 350px; display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); font-size: 14px;
+        }
+
+        .contact-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; text-align: center; }
+        .contact-card {
+            flex: 1 1 180px; background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px;
+        }
+        .contact-card h4 { color: var(--accent); letter-spacing: 2px; font-size: 10px; text-transform: uppercase; margin-bottom: 6px; }
+        .contact-card p { font-size: 13px; font-weight: 600; }
+
+        footer { text-align: center; padding: 30px; color: var(--text-secondary); font-size: 11px; border-top: 1px solid var(--footer-border); margin-top: 20px; letter-spacing: 1px; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 60px; left: 0; width: 100%; background: var(--bg); padding: 16px; gap: 12px; border-bottom: 1px solid var(--border); }
+            .menu-toggle { display: block; }
+            section { padding: 50px 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="#home" class="nav-logo">Фазенда <span>A-frame</span></a>
+        <button class="menu-toggle" onclick="document.getElementById('navMenu').classList.toggle('open')">☰</button>
+        <ul class="nav-links" id="navMenu">
+            <li><a href="#about">Обзор</a></li>
+            <li><a href="#gallery">Фото</a></li>
+            <li><a href="#services">Услуги</a></li>
+            <li><a href="#reviews">Отзывы</a></li>
+            <li><a href="#contacts">Контакты</a></li>
+        </ul>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Сменить тему" id="themeBtn">🌙</button>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-content fade-up">
+        <div class="hero-badge">Хорошее место 2026</div>
+        <h1>Фазенда<br><em>A-frame</em></h1>
+        <p class="hero-subtitle">Глэмпинг • Муром</p>
+        <div class="hero-features">
+            <span>🏕️ Уютные домики</span>
+            <span>🛁 Купель</span>
+            <span>🌲 Природа</span>
+            <span>🕐 Круглосуточно</span>
+        </div>
+        <a href="#contacts" class="btn-accent">Забронировать</a>
+    </div>
+</section>
+
+<section id="about">
+    <p class="section-tag fade-up">Коротко о месте</p>
+    <h2 class="section-title fade-up">Глэмпинг у озера</h2>
+    <div class="divider fade-up"></div>
+    <p class="section-desc fade-up">«Фазенда A-frame» — это уютное место для отдыха на природе, расположенное недалеко от города Муром. Идеально для перезагрузки, семейных выходных и романтических вечеров.</p>
+    <div class="rating-big fade-up">
+        <div class="num">5,0</div>
+        <div class="stars">★★★★★</div>
+        <div class="label">51 оценка • 48 отзывов</div>
+    </div>
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 16px;" class="fade-up">
+        <div class="award-card">
+            <div class="award-icon">🏆</div>
+            <div class="award-info"><h4>Хорошее место 2026</h4><p>Награда для любимых мест пользователей Яндекс Карт</p></div>
+        </div>
+    </div>
+</section>
+
+<section id="gallery">
+    <p class="section-tag fade-up">Фото</p>
+    <h2 class="section-title fade-up">Атмосфера Фазенды</h2>
+    <div class="gallery-grid fade-up">
+        <img src="https://images.unsplash.com/photo-1587061949409-02df41d5e562?q=80&w=600&auto=format&fit=crop" alt="Домик A-frame" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=600&auto=format&fit=crop" alt="Интерьер" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?q=80&w=600&auto=format&fit=crop" alt="Природа" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1545579133-99bb5ab189bd?q=80&w=600&auto=format&fit=crop" alt="Купель" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=600&auto=format&fit=crop" alt="Вид" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=600&auto=format&fit=crop" alt="Закат" loading="lazy">
+    </div>
+</section>
+
+<section id="services" style="background: var(--bg-green); max-width: 100%;">
+    <div style="max-width: 1100px; margin: 0 auto; padding: 0 16px;">
+        <p class="section-tag fade-up">Услуги</p>
+        <h2 class="section-title fade-up">Что вас ждёт</h2>
+        <div class="features-grid fade-up">
+            <div class="feature-card"><div class="feature-icon">🎄</div><h4>Новый Год 2026</h4><p>Праздничное оформление и программа</p></div>
+            <div class="feature-card"><div class="feature-icon">🛁</div><h4>Купель для Вас</h4><p>Горячая купель на свежем воздухе</p></div>
+            <div class="feature-card"><div class="feature-icon">🏠</div><h4>A-frame домики</h4><p>Уютные треугольные домики со всем необходимым</p></div>
+            <div class="feature-card"><div class="feature-icon">🌲</div><h4>Природа</h4><p>Лес, озеро и чистый воздух в 970 метрах от Верхозерья</p></div>
+            <div class="feature-card"><div class="feature-icon">🅿️</div><h4>Парковка</h4><p>Бесплатная парковка для гостей</p></div>
+            <div class="feature-card"><div class="feature-icon">🕐</div><h4>Круглосуточно</h4><p>Заезд в любое время, поддержка 24/7</p></div>
+        </div>
+    </div>
+</section>
+
+<section id="reviews">
+    <p class="section-tag fade-up">Отзывы</p>
+    <h2 class="section-title fade-up">Что говорят гости</h2>
+    <div class="reviews-grid fade-up">
+        <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-name">Елена Левдик</div>
+            <div class="review-date">3 января 2026</div>
+            <div class="review-text">Начали готовиться отметить новый 2026 год заранее, в конце лета. Выбрали в итоге Фазенду A-frame и это было лучшее решение!! Прекрасное место для отдыха и перезагрузки от городской суеты.</div>
+        </div>
+        <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-name">Ксения Бакулина</div>
+            <div class="review-date">21 января 2026</div>
+            <div class="review-text">Приеду ещё и не один раз 💯 Хочу выразить огромную благодарность собственнику данного домика Алексею. Нереально атмосферное место недалеко от г. Муром.</div>
+        </div>
+        <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-name">Дарсик</div>
+            <div class="review-date">3 августа 2025</div>
+            <div class="review-text">Посетили это место скромной семейной компанией и остались в восторге! Это место подходит для любого вида отдыха: посиделки с друзьями, семейная вылазка, отметить праздник.</div>
+        </div>
+    </div>
+</section>
+
+<section id="map">
+    <p class="section-tag fade-up">Где мы</p>
+    <h2 class="section-title fade-up">Как добраться</h2>
+    <div class="map-container fade-up">
+        📍 с. Верхозерье, ул. Озёрная, 65/1<br>
+        <small>970 м от остановки Верхозерье</small>
+    </div>
+</section>
+
+<section id="contacts">
+    <p class="section-tag fade-up">Контакты</p>
+    <h2 class="section-title fade-up">Забронируйте отдых</h2>
+    <div class="contact-row fade-up">
+        <div class="contact-card"><h4>Телефон</h4><p>+7 (926) 126-68-00</p></div>
+        <div class="contact-card"><h4>Адрес</h4><p>с. Верхозерье<br>ул. Озёрная, 65/1</p></div>
+        <div class="contact-card"><h4>Режим</h4><p>Круглосуточно<br>Поддержка 24/7</p></div>
+        <div class="contact-card"><h4>Награда</h4><p>🏆 Хорошее место 2026</p></div>
+    </div>
+    <div style="text-align: center; margin-top: 24px;" class="fade-up">
+        <a href="tel:+79261266800" class="btn-accent">Позвонить</a>
+    </div>
+</section>
+
+<footer>
+    © 2026 Фазенда A-frame • Глэмпинг • с. Верхозерье, ул. Озёрная, 65/1 • +7 (926) 126-68-00
+</footer>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelector('.hero .fade-up')?.classList.add('visible');
+
+    document.querySelectorAll('#navMenu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('navMenu').classList.remove('open');
+        });
+    });
+
+    function toggleTheme() {
+        const html = document.documentElement;
+        const btn = document.getElementById('themeBtn');
+        if (html.getAttribute('data-theme') === 'light') {
+            html.setAttribute('data-theme', 'dark');
+            btn.textContent = '☀️';
+            localStorage.setItem('fazenda-theme', 'dark');
+        } else {
+            html.setAttribute('data-theme', 'light');
+            btn.textContent = '🌙';
+            localStorage.setItem('fazenda-theme', 'light');
+        }
+    }
+
+    (function() {
+        const saved = localStorage.getItem('fazenda-theme');
+        if (saved === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('themeBtn').textContent = '☀️';
+        }
+    })();
+</script>
+</body>
+</html>
